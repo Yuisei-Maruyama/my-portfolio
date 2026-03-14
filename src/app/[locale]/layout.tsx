@@ -4,6 +4,7 @@ import { Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import MotionProvider from "@/components/MotionProvider";
 import "../globals.css";
 
@@ -131,6 +132,7 @@ const RootLayout = async ({
         <NextIntlClientProvider messages={messages}>
           <MotionProvider>
             {children}
+            <SpeedInsights />
           </MotionProvider>
         </NextIntlClientProvider>
       </body>
