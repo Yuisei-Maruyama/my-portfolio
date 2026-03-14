@@ -5,6 +5,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 import MotionProvider from "@/components/MotionProvider";
 import "../globals.css";
 
@@ -54,7 +55,7 @@ export const generateMetadata = async ({
   const t = await getTranslations({ locale, namespace: "metadata" });
 
   return {
-    metadataBase: new URL("https://yuisei.dev"),
+    metadataBase: new URL("https://yuisei-maruyama.vercel.app"),
     alternates: {
       canonical: locale === "ja" ? "/" : `/${locale}`,
       languages: {
@@ -81,7 +82,7 @@ export const generateMetadata = async ({
       type: "website",
       locale: locale === "ja" ? "ja_JP" : "en_US",
       siteName: "Yuisei Maruyama Portfolio",
-      url: locale === "ja" ? "https://yuisei.dev" : "https://yuisei.dev/en",
+      url: locale === "ja" ? "https://yuisei-maruyama.vercel.app" : "https://yuisei-maruyama.vercel.app/en",
     },
     twitter: {
       card: "summary_large_image",
@@ -98,7 +99,7 @@ const jsonLd = {
   name: "Yuisei Maruyama",
   jobTitle: "Frontend Engineer",
   description: "React, Next.js, TypeScriptを中心としたフロントエンド開発を行うエンジニア",
-  url: "https://yuisei.dev",
+  url: "https://yuisei-maruyama.vercel.app",
   sameAs: ["https://github.com/y-metro", "https://instagram.com/y_and_and"],
   knowsAbout: ["React", "Next.js", "TypeScript", "Vue.js", "Shopify", "Frontend Development"],
   worksFor: {
@@ -133,6 +134,7 @@ const RootLayout = async ({
           <MotionProvider>
             {children}
             <SpeedInsights />
+            <Analytics />
           </MotionProvider>
         </NextIntlClientProvider>
       </body>

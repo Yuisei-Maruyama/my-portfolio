@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://yuisei.dev/sitemap.xml
+Sitemap: https://yuisei-maruyama.vercel.app/sitemap.xml
