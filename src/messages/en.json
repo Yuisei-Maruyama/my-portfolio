@@ -1,0 +1,174 @@
+{
+  "metadata": {
+    "title": "Yuisei Maruyama | Frontend Engineer",
+    "description": "Portfolio site of Yuisei Maruyama. A frontend engineer specializing in React, Next.js, and TypeScript. Currently working on EC site development at CyberAgent.",
+    "ogDescription": "Frontend development with React, Next.js, and TypeScript. EC site development at CyberAgent.",
+    "twitterDescription": "Frontend development with React, Next.js, and TypeScript."
+  },
+  "hero": {
+    "description": "Modern web development with React, Next.js, and TypeScript.\nAn engineer pursuing performance and accessibility.",
+    "profile": {
+      "born": "1996",
+      "from": "TOKYO",
+      "interests": "Drinks · Travel · Art"
+    }
+  },
+  "about": {
+    "bio1": "Started career as a frontend engineer in 2019. After gaining experience with Vue.js / Nuxt.js, now focused on modern web development centered around React / Next.js.",
+    "bio2": "At CyberAgent, Inc., led the 0-to-1 headless EC development using Shopify. Handled end-to-end from requirements gathering and design to implementation, testing, and deployment, while leading a team of 4-6 engineers.",
+    "bio3": "Leveraged Claude AI to create requirements documents and design docs, and drove development process improvements by streamlining the workflow from issue creation through code review."
+  },
+  "skills": {
+    "frontend": {
+      "label": "FRONTEND",
+      "desc": "Primary stack"
+    },
+    "backend": {
+      "label": "BACKEND",
+      "desc": "Server-side"
+    },
+    "tools": {
+      "label": "TOOLS",
+      "desc": "Dev workflow"
+    },
+    "infra": {
+      "label": "INFRA",
+      "desc": "Cloud & DevOps"
+    }
+  },
+  "career": {
+    "teamSuffix": " members",
+    "position": "Position",
+    "companies": {
+      "cyberagent": {
+        "company": "CyberAgent, Inc.",
+        "role": "Frontend & Backend Engineer / Team Lead",
+        "projects": {
+          "ec": {
+            "title": "Major Drugstore Chain — Headless EC Development",
+            "description": "Led 0-to-1 headless EC development using Shopify. Built core EC features (products, cart, orders, payments) and corporate site. Implemented social login and EC functionality with GraphQL, handling the full lifecycle from requirements to deployment.",
+            "highlights": [
+              "Led a frontend team of 4-6 engineers: code review, task management, and technology selection",
+              "Designed and implemented social login (Email/Password, Google, Apple)",
+              "End-to-end development from backend API definition (Go) to frontend implementation",
+              "Maintenance page switching using load balancer",
+              "Collaborated with designers on 0-to-1 UI planning and implementation",
+              "Interaction testing using Storybook",
+              "Led PRD and design document creation. Streamlined requirements-to-review workflow using Claude AI",
+              "Performance improvements through component splitting and resolving package-related memory leaks",
+              "Feature flag-based release strategy for controlled feature rollouts"
+            ]
+          },
+          "admin": {
+            "title": "Major Drugstore Chain — Admin Panel Development",
+            "description": "Admin panel development for EC operations using Next.js. Implemented product/inventory management, user/permission management, CMS functionality, and product display management powered by Vertex AI Search.",
+            "highlights": [
+              "Product and inventory management feature design and implementation",
+              "User and permission management implementation",
+              "CMS functionality for content management",
+              "Product display management powered by Vertex AI Search"
+            ]
+          }
+        }
+      },
+      "gizumo": {
+        "company": "Gizumo, Inc.",
+        "role": "Frontend Engineer",
+        "projects": {
+          "cms": {
+            "title": "CMS + MA Service Frontend Development",
+            "description": "Frontend development for a CMS and marketing automation service.",
+            "highlights": [
+              "Implemented complex form interfaces",
+              "Marketing automation workflow UI"
+            ]
+          },
+          "gov": {
+            "title": "Government Agency — User & Organization Management System",
+            "description": "User and organization management screens and application system for a government agency. Implemented complex form handling and cross-service integration with microservice architecture, covering both frontend and backend (Node.js).",
+            "highlights": [
+              "Full-stack development covering frontend and backend (Node.js)",
+              "Implemented API coordination and authentication integration across multiple microservices",
+              "Designed multi-step form validation and dynamic conditional branching UI",
+              "Built accessible UI compliant with government accessibility standards"
+            ]
+          },
+          "comm": {
+            "title": "Internal Communication Tool",
+            "description": "Development of an in-house communication tool using Scrum methodology.",
+            "highlights": [
+              "Agile development with 2-week sprints",
+              "Real-time communication features"
+            ]
+          },
+          "edu": {
+            "title": "Programming Education Service Renewal",
+            "description": "Full renewal of a programming education platform with modern architecture.",
+            "highlights": [
+              "Atomic Design component architecture",
+              "Comprehensive test coverage with Jest"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "works": {
+    "items": {
+      "ec": {
+        "title": "Major Drugstore Chain — Headless EC Site",
+        "description": "0-to-1 headless EC development using Shopify. Built core EC features (products, cart, orders, payments) and corporate site. Implemented social login and EC functionality with Shopify Storefront API (GraphQL).",
+        "role": "Frontend & Backend Engineer / Team Lead",
+        "highlights": [
+          "Team lead of 4-6 engineers: code review, task management, technology selection",
+          "Social login (Email/Password, Google, Apple) — from requirements to implementation",
+          "End-to-end from backend API definition (Go) to frontend implementation",
+          "Collaborated with designers on 0-to-1 UI planning and implementation",
+          "Streamlined development process with Claude AI for requirements docs and design documents",
+          "Performance improvements through component splitting and memory leak resolution"
+        ]
+      },
+      "gov": {
+        "title": "Government Agency Management System",
+        "description": "User and organization management screens and application system for a government agency. Implemented microservice architecture with complex form handling.",
+        "role": "Frontend & Backend Engineer",
+        "highlights": [
+          "Full-stack development covering frontend and backend (Node.js)",
+          "API coordination and authentication integration across multiple microservices",
+          "Multi-step form validation with dynamic conditional branching UI",
+          "Accessible UI compliant with government accessibility standards"
+        ]
+      },
+      "cms": {
+        "title": "CMS + MA Service",
+        "description": "Content management system with marketing automation capabilities for enterprise clients.",
+        "role": "Frontend Engineer",
+        "highlights": [
+          "Dynamic form builder interface",
+          "Marketing automation workflow editor",
+          "Real-time preview functionality"
+        ]
+      },
+      "portfolio": {
+        "title": "Personal Portfolio",
+        "description": "This portfolio site built with modern web technologies featuring a liquid mercury/mirror aesthetic. Multilingual support (Japanese/English).",
+        "role": "Design & Development",
+        "highlights": [
+          "Liquid mercury/mirror design theme",
+          "Multilingual support with next-intl (JA/EN)",
+          "Mouse-following interactive background",
+          "Fully responsive + accessibility compliant"
+        ]
+      }
+    }
+  },
+  "contact": {
+    "description": "Feel free to reach out.\nI welcome new projects and technical discussions."
+  },
+  "footer": {
+    "copyright": "Yuisei Maruyama"
+  },
+  "header": {
+    "backToTop": "Back to top"
+  }
+}

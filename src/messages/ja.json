@@ -1,0 +1,169 @@
+{
+  "metadata": {
+    "title": "Yuisei Maruyama | Frontend Engineer",
+    "description": "丸山唯成のポートフォリオサイト。React, Next.js, TypeScriptを中心としたフロントエンド開発を行うエンジニアです。サイバーエージェントにてECサイト開発に従事。",
+    "ogDescription": "React, Next.js, TypeScriptを中心としたフロントエンド開発。サイバーエージェントにてECサイト開発に従事。",
+    "twitterDescription": "React, Next.js, TypeScriptを中心としたフロントエンド開発。"
+  },
+  "hero": {
+    "description": "React, Next.js, TypeScript によるモダンWeb開発。\nパフォーマンスとアクセシビリティを追求するエンジニア。"
+  },
+  "about": {
+    "bio1": "2019年よりフロントエンドエンジニアとしてキャリアをスタート。Vue.js / Nuxt.js での開発経験を経て、現在は React / Next.js を中心としたモダンWeb開発に従事。",
+    "bio2": "株式会社サイバーエージェントにて、Shopifyを使用したヘッドレスEC開発を0→1で推進。要件定義からデザイン、実装、テスト、デプロイまで一貫して担当し、4〜6名のチームリードも経験。",
+    "bio3": "Claude AIを活用した要件定義書・デザインドキュメント作成や、Issueからレビューまでの作業効率化にも注力し、開発プロセスの改善を推進。"
+  },
+  "skills": {
+    "frontend": {
+      "label": "FRONTEND",
+      "desc": "Primary stack"
+    },
+    "backend": {
+      "label": "BACKEND",
+      "desc": "Server-side"
+    },
+    "tools": {
+      "label": "TOOLS",
+      "desc": "Dev workflow"
+    },
+    "infra": {
+      "label": "INFRA",
+      "desc": "Cloud & DevOps"
+    }
+  },
+  "career": {
+    "teamSuffix": "名",
+    "position": "ポジション",
+    "companies": {
+      "cyberagent": {
+        "company": "CyberAgent, Inc.",
+        "role": "Frontend & Backend Engineer / Team Lead",
+        "projects": {
+          "ec": {
+            "title": "某大手ドラッグストア ヘッドレスEC開発",
+            "description": "Shopifyを使用した0→1のヘッドレスEC開発を推進。商品・カート・注文・決済のEC基本機能からコーポレートサイトまでを実現。ソーシャルログイン機能やEC機能をGraphQLで実装し、要件検討からデザイン、実装、テスト、デプロイまでを一貫して担当。",
+            "highlights": [
+              "4〜6名のフロントエンドチームリードとして、コードレビュー・タスク管理・技術選定を主導",
+              "ソーシャルログイン（Email/Password, Google, Apple）の設計・実装",
+              "バックエンドAPI定義(Go) からフロントエンド実装までを一気通貫で対応",
+              "ロードバランサを使用したメンテナンス画面への切り替え対応",
+              "デザイナーと協業し、0→1でのUI検討、実装",
+              "Storybookを使用したインタラクションテストの実施",
+              "PRD・デザインドキュメント作成を主導。Claude AIを活用した要件定義書作成やIssue〜レビューの効率化を推進",
+              "コンポーネント分割によるパフォーマンス改善、パッケージ起因のメモリリーク特定・解消",
+              "フィーチャーフラグによる機能リリース戦略の実施"
+            ]
+          },
+          "admin": {
+            "title": "某大手ドラッグストア 管理画面開発",
+            "description": "Next.jsを使用したEC管理画面の開発。商品・在庫管理、ユーザー・権限管理、CMS機能、Vertex AI Searchを活用した商品表示管理を実装。",
+            "highlights": [
+              "商品・在庫管理機能の設計・実装",
+              "ユーザー・権限管理機能の実装",
+              "CMS機能によるコンテンツ管理",
+              "Vertex AI Searchを活用した商品表示管理"
+            ]
+          }
+        }
+      },
+      "gizumo": {
+        "company": "Gizumo, Inc.",
+        "role": "Frontend Engineer",
+        "projects": {
+          "cms": {
+            "title": "CMS + MAサービス フロントエンド開発",
+            "description": "CMSおよびマーケティングオートメーションサービスのフロントエンド開発。",
+            "highlights": [
+              "複雑なフォームインターフェースの実装",
+              "マーケティングオートメーション ワークフローUI"
+            ]
+          },
+          "gov": {
+            "title": "某官公庁向けユーザ・組織管理システム",
+            "description": "某官公庁向けのユーザや組織管理画面・申請システム。マイクロサービスアーキテクチャによる複雑なフォーム処理とサービス間統合をフロントエンド・バックエンド(Node.js)の両面で実装。",
+            "highlights": [
+              "フロントエンド・バックエンド(Node.js)の両面を担当",
+              "複数マイクロサービス間のAPI連携・認証統合を実装",
+              "多段階フォームバリデーションと動的条件分岐UIの設計・実装",
+              "行政アクセシビリティ基準に準拠したUI開発"
+            ]
+          },
+          "comm": {
+            "title": "社内コミュニケーションツール",
+            "description": "スクラム手法を用いた社内コミュニケーションツールの開発。",
+            "highlights": [
+              "2週間スプリントのアジャイル開発",
+              "リアルタイムコミュニケーション機能"
+            ]
+          },
+          "edu": {
+            "title": "プログラミング教育サービス リニューアル",
+            "description": "モダンアーキテクチャによるプログラミング教育プラットフォームのフルリニューアル。",
+            "highlights": [
+              "Atomic Designコンポーネントアーキテクチャ",
+              "Jestによる包括的テストカバレッジ"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "works": {
+    "items": {
+      "ec": {
+        "title": "某大手ドラッグストア ヘッドレスECサイト",
+        "description": "Shopifyを使用した0→1のヘッドレスEC開発。商品・カート・注文・決済のEC基本機能とコーポレートサイトを実現。ソーシャルログインやEC機能をShopify Storefront API (GraphQL) で実装。",
+        "role": "Frontend & Backend Engineer / Team Lead",
+        "highlights": [
+          "4〜6名のチームリード: コードレビュー、タスク管理、技術選定を主導",
+          "ソーシャルログイン（Email/Password, Google, Apple）の要件検討〜実装",
+          "バックエンドAPI定義(Go)からフロントエンド実装まで一気通貫で対応",
+          "デザイナーと協業し、0→1でのUI検討・実装",
+          "Claude AIを活用した要件定義書・デザインドキュメント作成で開発プロセスを効率化",
+          "コンポーネント分割・メモリリーク解消によるパフォーマンス改善"
+        ]
+      },
+      "gov": {
+        "title": "某官公庁向け管理システム",
+        "description": "某官公庁向けのユーザや組織管理画面・申請システム。複雑なフォーム処理を備えたマイクロサービスアーキテクチャの実装。",
+        "role": "Frontend & Backend Engineer",
+        "highlights": [
+          "フロントエンド・バックエンド(Node.js)の両面を担当",
+          "複数マイクロサービス間のAPI連携・認証統合",
+          "多段階フォームバリデーションと動的条件分岐UI",
+          "行政アクセシビリティ基準に準拠したUI開発"
+        ]
+      },
+      "cms": {
+        "title": "CMS + MAサービス",
+        "description": "エンタープライズクライアント向けマーケティングオートメーション機能付きCMS。",
+        "role": "Frontend Engineer",
+        "highlights": [
+          "動的フォームビルダーインターフェース",
+          "マーケティングオートメーション ワークフローエディタ",
+          "リアルタイムプレビュー機能"
+        ]
+      },
+      "portfolio": {
+        "title": "Personal Portfolio",
+        "description": "リキッドマーキュリー/ミラーの美学を特徴とする、モダンWeb技術で構築されたポートフォリオサイト。多言語対応（日本語/英語）。",
+        "role": "Design & Development",
+        "highlights": [
+          "リキッドマーキュリー/ミラーデザインテーマ",
+          "next-intlによる多言語対応（JA/EN）",
+          "マウス追従インタラクティブ背景",
+          "フルレスポンシブ + アクセシビリティ対応"
+        ]
+      }
+    }
+  },
+  "contact": {
+    "description": "お気軽にご連絡ください。\n新しいプロジェクトや技術的な議論を歓迎します。"
+  },
+  "footer": {
+    "copyright": "Yuisei Maruyama"
+  },
+  "header": {
+    "backToTop": "ページトップに戻る"
+  }
+}

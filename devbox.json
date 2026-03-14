@@ -1,0 +1,14 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.17.0/.schema/devbox.schema.json",
+  "packages": [],
+  "shell": {
+    "init_hook": [
+      "echo '🚀 my-portfolio dev environment ready!'"
+    ],
+    "scripts": {
+      "dev": "pnpm dev",
+      "build": "pnpm build",
+      "lint": "pnpm lint"
+    }
+  }
+}
