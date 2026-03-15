@@ -1,14 +1,14 @@
 "use client";
 
 import { useRef, useEffect } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import Image from "next/image";
 import Text from "./Typography";
 
 const container = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.12, delayChildren: 0.4 },
+    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
   },
 };
 
@@ -347,9 +347,9 @@ const Hero = () => {
       />
 
       <div className="relative z-10 w-full max-w-4xl mx-auto px-6 sm:px-8">
-        <motion.div variants={container} initial="hidden" animate="visible">
+        <m.div variants={container} initial="hidden" animate="visible">
           {/* Boarding Pass Card */}
-          <motion.div variants={line}>
+          <m.div variants={line}>
             <article
               ref={cardRef}
               className="boarding-pass"
@@ -563,10 +563,10 @@ const Hero = () => {
               </div>
 
             </article>
-          </motion.div>
+          </m.div>
 
           {/* Scroll indicator */}
-          <motion.div
+          <m.div
             variants={line}
             className="mt-16 flex items-center gap-3"
             aria-hidden="true"
@@ -574,13 +574,13 @@ const Hero = () => {
             <Text variant="overline" className="uppercase">
               scroll
             </Text>
-            <motion.span
+            <m.span
               className="block w-px h-6 bg-silver/40 origin-top"
               animate={{ scaleY: [1, 0.3, 1] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             />
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
       </div>
     </section>
   );

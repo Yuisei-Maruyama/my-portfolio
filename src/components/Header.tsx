@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { NAV_ITEMS } from "@/lib/constants";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -10,8 +9,19 @@ import Text from "./Typography";
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const t = useTranslations("header");
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const closeMenu = useCallback(() => setIsOpen(false), []);
+
+  // Handle Escape key
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeMenu();
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, closeMenu]);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-bg-primary/90 backdrop-blur-md border-b border-silver-100">
@@ -75,40 +85,35 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Mobile menu */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              id="mobile-menu"
-              role="menu"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              onKeyDown={(e) => {
-                if (e.key === "Escape") closeMenu();
-              }}
-              className="md:hidden overflow-hidden border-t border-silver-100"
-            >
-              <ul className="py-3">
-                {NAV_ITEMS.map((item, i) => (
-                  <li key={item.href} role="none">
-                    <a
-                      href={item.href}
-                      role="menuitem"
-                      onClick={closeMenu}
-                      className="block py-3.5 px-3 text-xs tracking-nav text-text-secondary hover:text-silver transition-colors uppercase"
-                    >
-                      <Text variant="overline" className="mr-2 inline" aria-hidden="true">
-                        0{i + 1}
-                      </Text>
-                      {item.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Mobile menu — CSS grid transition */}
+        <div
+          ref={menuRef}
+          id="mobile-menu"
+          role="menu"
+          className={`md:hidden overflow-hidden border-t border-silver-100 transition-[grid-template-rows,opacity] duration-300 ease-out grid ${
+            isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+          }`}
+        >
+          <div className="overflow-hidden">
+            <ul className="py-3">
+              {NAV_ITEMS.map((item, i) => (
+                <li key={item.href} role="none">
+                  <a
+                    href={item.href}
+                    role="menuitem"
+                    onClick={closeMenu}
+                    className="block py-3.5 px-3 text-xs tracking-nav text-text-secondary hover:text-silver transition-colors uppercase"
+                  >
+                    <Text variant="overline" className="mr-2 inline" aria-hidden="true">
+                      0{i + 1}
+                    </Text>
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </nav>
     </header>
   );

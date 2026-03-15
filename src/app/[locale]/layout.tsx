@@ -13,27 +13,27 @@ const syne = Syne({
   variable: "--font-syne",
   subsets: ["latin"],
   weight: ["700"],
-  display: "swap",
+  display: "optional",
 });
 
 const dosis = Dosis({
   variable: "--font-dosis",
   subsets: ["latin"],
   weight: ["800"],
-  display: "swap",
+  display: "optional",
 });
 
 const barlowCondensed = Barlow_Condensed({
   variable: "--font-barlow-condensed",
   subsets: ["latin"],
   weight: ["400", "700"],
-  display: "swap",
+  display: "optional",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-  display: "swap",
+  display: "optional",
 });
 
 export const viewport: Viewport = {
@@ -122,8 +122,6 @@ const RootLayout = async ({
   return (
     <html lang={locale} className="dark">
       <head>
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -135,8 +133,8 @@ const RootLayout = async ({
         <NextIntlClientProvider messages={messages}>
           <MotionProvider>
             {children}
-            <SpeedInsights />
-            <Analytics />
+            {process.env.VERCEL && <SpeedInsights />}
+            {process.env.VERCEL && <Analytics />}
           </MotionProvider>
         </NextIntlClientProvider>
       </body>

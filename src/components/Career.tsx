@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { careerData } from "@/data/career";
 import { FADE_IN } from "@/lib/constants";
@@ -11,7 +11,7 @@ const Career = () => {
 
   return (
     <section id="career" className="content-auto py-28 px-5 sm:px-8 max-w-6xl mx-auto">
-      <motion.div {...FADE_IN} className="flex items-center gap-4 mb-16">
+      <m.div {...FADE_IN} className="flex items-center gap-4 mb-16">
         <Text variant="overline" className="border border-silver-100 px-3 py-1.5" aria-hidden="true">
           03
         </Text>
@@ -19,7 +19,7 @@ const Career = () => {
         <h2 className="font-[family-name:var(--font-heading)] text-2xl sm:text-3xl font-bold tracking-wide">
           CAREER
         </h2>
-      </motion.div>
+      </m.div>
 
       <div className="relative">
         {/* Timeline spine */}
@@ -27,7 +27,7 @@ const Career = () => {
 
         <div className="space-y-14">
           {careerData.map((career, ci) => (
-            <motion.div
+            <m.div
               key={career.id}
               {...FADE_IN}
               transition={{ duration: 0.7, delay: ci * 0.1 }}
@@ -56,7 +56,7 @@ const Career = () => {
                   {career.projects.map((project, pi) => {
                     const highlights = t.raw(`companies.${career.id}.projects.${project.id}.highlights`) as string[];
                     return (
-                      <motion.div
+                      <m.div
                         key={project.id}
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
@@ -83,7 +83,7 @@ const Career = () => {
                           </Text>
                           <span className="text-silver/30" aria-hidden="true">/</span>
                           <span className="text-silver-light">
-                            {project.team.map((m) => `${m.role}:${m.count}`).join(" / ")}
+                            {project.team.map((member) => `${member.role}:${member.count}`).join(" / ")}
                           </span>
                           <span className="text-silver/30" aria-hidden="true">|</span>
                           <span className="font-semibold text-text-primary">
@@ -114,12 +114,12 @@ const Career = () => {
                             </span>
                           ))}
                         </div>
-                      </motion.div>
+                      </m.div>
                     );
                   })}
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           ))}
         </div>
       </div>

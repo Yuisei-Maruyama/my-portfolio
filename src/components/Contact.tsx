@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { FADE_IN } from "@/lib/constants";
 import Text from "./Typography";
@@ -76,7 +76,7 @@ const Contact = () => {
 
   return (
     <section id="contact" className="content-auto py-28 px-5 sm:px-8 max-w-6xl mx-auto">
-      <motion.div {...FADE_IN} className="flex items-center gap-4 mb-16">
+      <m.div {...FADE_IN} className="flex items-center gap-4 mb-16">
         <Text variant="overline" className="border border-silver-100 px-3 py-1.5" aria-hidden="true">
           05
         </Text>
@@ -84,21 +84,21 @@ const Contact = () => {
         <h2 className="font-[family-name:var(--font-heading)] text-2xl sm:text-3xl font-bold tracking-wide">
           CONTACT
         </h2>
-      </motion.div>
+      </m.div>
 
-      <motion.p
+      <m.p
         {...FADE_IN}
         transition={{ duration: 0.7, delay: 0.1 }}
         className="text-text-secondary text-sm mb-12 max-w-md leading-relaxed whitespace-pre-line"
       >
         {t("description")}
-      </motion.p>
+      </m.p>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {contacts.map((contact, i) => {
           const Icon = contact.icon;
           return (
-            <motion.a
+            <m.a
               key={contact.label}
               href={contact.href}
               target={contact.label !== "Email" ? "_blank" : undefined}
@@ -115,7 +115,7 @@ const Contact = () => {
                 {contact.label}
               </Text>
               <Text variant="caption" as="p">{contact.value}</Text>
-            </motion.a>
+            </m.a>
           );
         })}
       </div>
