@@ -66,9 +66,9 @@
   --color-silver-light: var(--silver-light);
   --color-silver-bright: var(--silver-bright);
   --color-silver-dim: var(--silver-dim);
-  --color-text-primary: var(--text-primary);
-  --color-text-secondary: var(--text-secondary);
-  --color-text-muted: var(--text-muted);
+  --color-primary: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-muted: var(--text-muted);
   --font-display: var(--font-display);
   --font-heading: var(--font-heading);
   --font-mono: var(--font-mono);
@@ -629,6 +629,18 @@ img.boarding-pass-qr {
   contain-intrinsic-size: auto 500px;
 }
 
+/* ═══ Gauge Fill Animation ═══ */
+@keyframes gauge-fill {
+  from {
+    stroke-dasharray: 0 125.66;
+  }
+}
+
+.gauge-circle {
+  animation: gauge-fill 1.2s ease-out forwards;
+  stroke-dasharray: var(--dash-len) 125.66;
+}
+
 /* ═══ Reduced Motion ═══ */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -659,6 +671,10 @@ img.boarding-pass-qr {
 
   .orb {
     animation: none !important;
+  }
+
+  .gauge-circle {
+    animation: none;
   }
 
   .boarding-pass {

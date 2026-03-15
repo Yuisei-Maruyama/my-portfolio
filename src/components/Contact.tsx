@@ -89,7 +89,7 @@ const Contact = () => {
       <m.p
         {...FADE_IN}
         transition={{ duration: 0.7, delay: 0.1 }}
-        className="text-text-secondary text-sm mb-12 max-w-md leading-relaxed whitespace-pre-line"
+        className="text-secondary text-sm mb-12 max-w-md leading-relaxed whitespace-pre-line"
       >
         {t("description")}
       </m.p>

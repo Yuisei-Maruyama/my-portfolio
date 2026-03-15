@@ -56,7 +56,7 @@ const Works = () => {
 
                 {/* Card body */}
                 <div className="p-5 sm:p-6 flex-1 flex flex-col">
-                  <h3 className="font-[family-name:var(--font-heading)] text-base font-bold text-text-primary mb-1">
+                  <h3 className="font-[family-name:var(--font-heading)] text-base font-bold text-primary mb-1">
                     {t(`items.${work.id}.title`)}
                   </h3>
                   <Text variant="caption" as="p" className="tracking-btn mb-3">
@@ -71,7 +71,7 @@ const Works = () => {
                     {highlights.map((h, hi) => (
                       <li
                         key={hi}
-                        className="text-text-secondary text-xs leading-relaxed flex items-start gap-2"
+                        className="text-secondary text-xs leading-relaxed flex items-start gap-2"
                       >
                         <span className="text-silver/40 mt-0.5 shrink-0 text-[8px]" aria-hidden="true">
                           ▸

@@ -509,7 +509,7 @@ const Hero = ({ lighthouseScores }: HeroProps) => {
                   {scores && (
                   <div>
                     <span className="boarding-pass-label">LIGHTHOUSE</span>
-                    <div className="flex items-center gap-4 sm:gap-6 lg:gap-8 mt-1.5">
+                    <div className="flex items-center gap-4 sm:gap-6 lg:gap-8 mt-3">
                       {scores.map(({ key, label, score }) => {
                         const strokeColor = score >= 90 ? "#0cce6b" : score >= 50 ? "#ffa400" : "#ff4e42";
                         const dashLen = (GAUGE_CIRCUMFERENCE * score) / 100;
@@ -536,7 +536,8 @@ const Hero = ({ lighthouseScores }: HeroProps) => {
                                 fill="none"
                                 stroke={strokeColor}
                                 strokeWidth="3"
-                                strokeDasharray={`${dashLen} ${GAUGE_CIRCUMFERENCE}`}
+                                className="gauge-circle"
+                                style={{ "--dash-len": `${dashLen}` } as React.CSSProperties}
                                 strokeLinecap="round"
                                 transform="rotate(-90 24 24)"
                               />

@@ -42,11 +42,8 @@ const Header = () => {
                 <li key={item.href}>
                   <a
                     href={item.href}
-                    className="text-sm lg:text-md tracking-nav text-text-secondary hover:text-silver transition-colors duration-300 relative group uppercase"
+                    className="text-sm lg:text-md tracking-nav text-primary hover:text-silver-light transition-colors duration-300 relative group uppercase"
                   >
-                    <Text variant="overline" className="mr-1 inline" aria-hidden="true">
-                      0{i + 1}
-                    </Text>
                     {item.label}
                     <span className="absolute -bottom-1 left-0 w-0 h-px bg-silver group-hover:w-full transition-all duration-300" />
                   </a>
@@ -100,11 +97,8 @@ const Header = () => {
                   <a
                     href={item.href}
                     onClick={closeMenu}
-                    className="block py-3.5 px-3 text-xs tracking-nav text-text-secondary hover:text-silver transition-colors uppercase"
+                    className="block py-3.5 px-3 text-xs tracking-nav text-primary hover:text-silver-light transition-colors uppercase"
                   >
-                    <Text variant="overline" className="mr-2 inline" aria-hidden="true">
-                      0{i + 1}
-                    </Text>
                     {item.label}
                   </a>
                 </li>

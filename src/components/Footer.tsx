@@ -6,10 +6,10 @@ const Footer = async () => {
   return (
     <footer className="border-t border-silver-100 py-8 px-5 sm:px-8">
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-        <p className="font-[family-name:var(--font-display)] text-sm lg:text-md tracking-nav text-text-secondary">
+        <p className="font-[family-name:var(--font-display)] text-sm lg:text-md tracking-nav text-secondary">
           &copy; {new Date().getFullYear()} {t("copyright")}
         </p>
-        <p className="font-[family-name:var(--font-display)] text-sm lg:text-md tracking-btn text-text-secondary">
+        <p className="font-[family-name:var(--font-display)] text-sm lg:text-md tracking-btn text-secondary">
           Next.js &middot; TailwindCSS &middot; Framer&nbsp;Motion
         </p>
       </div>

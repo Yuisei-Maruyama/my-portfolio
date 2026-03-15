@@ -40,16 +40,16 @@ const Career = () => {
               <div className="mirror-card rounded-sm p-6 sm:p-8">
                 {/* Company header */}
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-1">
-                  <h3 className="font-[family-name:var(--font-heading)] text-lg font-bold text-text-primary">
+                  <h3 className="font-[family-name:var(--font-heading)] text-xl lg:text-3xl font-bold text-primary">
                     {t(`companies.${career.id}.company`)}
                   </h3>
                   <Text variant="caption" className="tracking-nav shrink-0">
                     {career.period}
                   </Text>
                 </div>
-                <Text variant="caption" as="p" className="tracking-nav mb-6">
+                <p className="font-[family-name:var(--font-mono)] text-lg lg:text-2xl tracking-nav text-primary mb-6">
                   {t(`companies.${career.id}.role`)}
-                </Text>
+                </p>
 
                 {/* Projects */}
                 <div className="space-y-6">
@@ -65,28 +65,28 @@ const Career = () => {
                         className="border-l border-silver-100 pl-4"
                       >
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-2">
-                          <h4 className="text-sm font-semibold text-text-primary">
+                          <h4 className="text-md lg:text-xl font-semibold text-primary">
                             {t(`companies.${career.id}.projects.${project.id}.title`)}
                           </h4>
                           <Text variant="caption">
                             {project.period}
                           </Text>
                         </div>
-                        <Text variant="body" as="p" className="text-xs mb-2">
+                        <p className="text-sm lg:text-md text-primary leading-relaxed mb-2">
                           {t(`companies.${career.id}.projects.${project.id}.description`)}
-                        </Text>
+                        </p>
 
                         {/* Team composition & position */}
-                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm lg:text-md text-text-secondary mb-3">
-                          <Text variant="label" className="inline mb-0">
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm lg:text-md text-primary mb-3">
+                          <span className="font-[family-name:var(--font-mono)] text-sm lg:text-md tracking-label text-primary uppercase">
                             {project.teamSize}{t("teamSuffix")}
-                          </Text>
+                          </span>
                           <span className="text-silver/30" aria-hidden="true">/</span>
                           <span className="text-silver-light">
                             {project.team.map((member) => `${member.role}:${member.count}`).join(" / ")}
                           </span>
                           <span className="text-silver/30" aria-hidden="true">|</span>
-                          <span className="font-semibold text-text-primary">
+                          <span className="font-semibold text-primary">
                             {t("position")}: {project.position}
                           </span>
                         </div>
@@ -96,7 +96,7 @@ const Career = () => {
                             {highlights.map((h, hi) => (
                               <li
                                 key={hi}
-                                className="text-text-secondary text-xs leading-relaxed flex items-start gap-2"
+                                className="text-primary text-sm lg:text-md leading-relaxed flex items-start gap-2"
                               >
                                 <span className="text-silver/50 mt-0.5 shrink-0 text-[8px]" aria-hidden="true">
                                   ▸

@@ -27,9 +27,9 @@ const config: Config = {
           bright: "#F5F5F7",
           dim: "#6B6B78",
         },
-        "text-primary": "#EDEDF0",
-        "text-secondary": "#9898A1",
-        "text-muted": "#52525B",
+        primary: "#EDEDF0",
+        secondary: "#9898A1",
+        muted: "#52525B",
       },
       fontFamily: {
         display: ["var(--font-syne)", "system-ui", "sans-serif"],
@@ -60,6 +60,9 @@ const config: Config = {
         sm: "14px",
         md: "16px",
         lg: "18px",
+        xl: "20px",
+        "2xl": "24px",
+        "3xl": "28px",
       },
       spacing: {
         "bp-sm": "24px",

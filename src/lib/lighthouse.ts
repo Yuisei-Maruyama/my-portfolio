@@ -81,5 +81,5 @@ async function fetchScores(): Promise<LighthouseScores | null> {
 }
 
 export const getLighthouseScores = unstable_cache(fetchScores, ["lighthouse-scores"], {
-  revalidate: 86400,
+  revalidate: 3600,
 });

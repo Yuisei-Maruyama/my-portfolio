@@ -48,7 +48,7 @@ const Skills = () => {
                       className="group mirror-card rounded-sm p-4 flex items-center gap-3"
                     >
                       <Icon className="text-silver/60 group-hover:text-silver text-xl shrink-0 transition-colors" aria-hidden="true" />
-                      <span className="text-xs text-text-primary">
+                      <span className="text-xs text-primary">
                         {skill.name}
                       </span>
                     </m.div>

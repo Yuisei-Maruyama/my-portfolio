@@ -15,12 +15,12 @@ const variantConfig: Record<Variant, { defaultTag: As; className: string }> = {
   label: {
     defaultTag: "span",
     className:
-      "block font-[family-name:var(--font-mono)] text-sm lg:text-md tracking-label text-text-secondary uppercase",
+      "block font-[family-name:var(--font-mono)] text-sm lg:text-md tracking-label text-secondary uppercase",
   },
   value: {
     defaultTag: "div",
     className:
-      "font-[family-name:var(--font-heading)] text-lg text-text-primary font-semibold",
+      "font-[family-name:var(--font-heading)] text-lg text-primary font-semibold",
   },
   caption: {
     defaultTag: "span",
@@ -28,12 +28,12 @@ const variantConfig: Record<Variant, { defaultTag: As; className: string }> = {
   },
   body: {
     defaultTag: "p",
-    className: "text-text-secondary text-sm leading-relaxed",
+    className: "text-secondary text-sm leading-relaxed",
   },
   overline: {
     defaultTag: "span",
     className:
-      "font-[family-name:var(--font-display)] text-sm lg:text-md tracking-display text-text-secondary",
+      "font-[family-name:var(--font-display)] text-sm lg:text-md tracking-display text-secondary",
   },
   tag: {
     defaultTag: "span",

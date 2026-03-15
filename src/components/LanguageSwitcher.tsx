@@ -19,20 +19,20 @@ const LanguageSwitcher = () => {
         className={`px-1.5 py-0.5 transition-colors duration-300 ${
           locale === "ja"
             ? "text-silver-light font-semibold"
-            : "text-text-muted hover:text-text-secondary"
+            : "text-muted hover:text-secondary"
         }`}
         aria-label="JA — 日本語に切り替え"
         aria-current={locale === "ja" ? "true" : undefined}
       >
         JA
       </button>
-      <span className="text-text-muted" aria-hidden="true">/</span>
+      <span className="text-muted" aria-hidden="true">/</span>
       <button
         onClick={() => switchLocale("en")}
         className={`px-1.5 py-0.5 transition-colors duration-300 ${
           locale === "en"
             ? "text-silver-light font-semibold"
-            : "text-text-muted hover:text-text-secondary"
+            : "text-muted hover:text-secondary"
         }`}
         aria-label="EN — Switch to English"
         aria-current={locale === "en" ? "true" : undefined}

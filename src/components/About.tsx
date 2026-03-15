@@ -29,7 +29,7 @@ const About = () => {
           <Text variant="overline" as="p" className="tracking-label mb-6 uppercase" aria-hidden="true">
             &gt; cat profile.md
           </Text>
-          <div className="space-y-4 text-text-secondary text-sm leading-[1.8]">
+          <div className="space-y-4 text-primary text-sm leading-[1.8]">
             <p>{t("bio1")}</p>
             <p>{t("bio2")}</p>
             <p>{t("bio3")}</p>
