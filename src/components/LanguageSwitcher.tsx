@@ -21,7 +21,7 @@ const LanguageSwitcher = () => {
             ? "text-silver-light font-semibold"
             : "text-text-muted hover:text-text-secondary"
         }`}
-        aria-label="日本語に切り替え"
+        aria-label="JA — 日本語に切り替え"
         aria-current={locale === "ja" ? "true" : undefined}
       >
         JA
@@ -34,7 +34,7 @@ const LanguageSwitcher = () => {
             ? "text-silver-light font-semibold"
             : "text-text-muted hover:text-text-secondary"
         }`}
-        aria-label="Switch to English"
+        aria-label="EN — Switch to English"
         aria-current={locale === "en" ? "true" : undefined}
       >
         EN

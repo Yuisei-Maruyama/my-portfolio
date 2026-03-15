@@ -491,6 +491,29 @@ a:focus-visible > .mirror-card {
   filter: saturate(0.7) brightness(1.1);
 }
 
+.boarding-pass-gauge-label {
+  font-family: var(--font-bp), var(--font-mono), sans-serif;
+  font-size: 8px;
+  letter-spacing: var(--tracking-tag);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.2;
+}
+
+@media (max-width: 1023px) {
+  .boarding-pass-gauge-label {
+    max-width: 56px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .boarding-pass-gauge-label {
+    font-size: var(--text-detail);
+    white-space: nowrap;
+  }
+}
+
 .boarding-pass-qr-wrapper {
   width: 140px;
   background: var(--silver-light);

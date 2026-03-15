@@ -4,6 +4,7 @@ import { useRef, useEffect } from "react";
 import { m } from "framer-motion";
 import Image from "next/image";
 import Text from "./Typography";
+import type { LighthouseScores } from "@/lib/lighthouse";
 
 const container = {
   hidden: {},
@@ -23,6 +24,16 @@ const line = {
 
 const PARALLAX_FACTORS = [0.02, 0.03, 0.04];
 
+const DEFAULT_SCORES = [
+  { key: "performance", label: "PERFORMANCE", score: 94 },
+  { key: "accessibility", label: "ACCESSIBILITY", score: 100 },
+  { key: "bestPractices", label: "BEST PRACTICES", score: 100 },
+  { key: "seo", label: "SEO", score: 100 },
+] as const;
+
+const GAUGE_RADIUS = 20;
+const GAUGE_CIRCUMFERENCE = 2 * Math.PI * GAUGE_RADIUS;
+
 const FLIGHT_LOG = [
   { flag: "\u{1F1FA}\u{1F1F8}", codes: ["IAD", "BWI"] },
   { flag: "\u{1F1EB}\u{1F1F7}", codes: ["CDG"] },
@@ -37,7 +48,11 @@ const FLIGHT_LOG = [
   { flag: "\u{1F1F2}\u{1F1FE}", codes: ["KUL"] },
 ];
 
-const Hero = () => {
+type HeroProps = {
+  lighthouseScores: LighthouseScores | null;
+};
+
+const Hero = ({ lighthouseScores }: HeroProps) => {
   const sectionRef = useRef<HTMLElement>(null);
   const cardRef = useRef<HTMLElement>(null);
   const orbRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -45,6 +60,14 @@ const Hero = () => {
   const hitAreaRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stubRef = useRef<HTMLDivElement>(null);
+
+  const scores = lighthouseScores
+    ? DEFAULT_SCORES.map(({ key, label }) => ({
+        key,
+        label,
+        score: lighthouseScores[key as keyof LighthouseScores],
+      }))
+    : null;
 
   // Mouse tracking via CSS custom properties (no re-renders)
   useEffect(() => {
@@ -481,6 +504,62 @@ const Hero = () => {
                       ))}
                     </div>
                   </div>
+
+                  {/* LIGHTHOUSE SCORES */}
+                  {scores && (
+                  <div>
+                    <span className="boarding-pass-label">LIGHTHOUSE</span>
+                    <div className="flex items-center gap-4 sm:gap-6 lg:gap-8 mt-1.5">
+                      {scores.map(({ key, label, score }) => {
+                        const strokeColor = score >= 90 ? "#0cce6b" : score >= 50 ? "#ffa400" : "#ff4e42";
+                        const dashLen = (GAUGE_CIRCUMFERENCE * score) / 100;
+                        return (
+                          <div key={key} className="flex flex-col items-center gap-1 lg:gap-1.5">
+                            <svg
+                              className="w-12 h-12 lg:w-16 lg:h-16"
+                              viewBox="0 0 48 48"
+                              role="img"
+                              aria-label={`${label} ${score}`}
+                            >
+                              <circle
+                                cx="24"
+                                cy="24"
+                                r={GAUGE_RADIUS}
+                                fill="none"
+                                stroke="rgba(192,192,200,0.12)"
+                                strokeWidth="3"
+                              />
+                              <circle
+                                cx="24"
+                                cy="24"
+                                r={GAUGE_RADIUS}
+                                fill="none"
+                                stroke={strokeColor}
+                                strokeWidth="3"
+                                strokeDasharray={`${dashLen} ${GAUGE_CIRCUMFERENCE}`}
+                                strokeLinecap="round"
+                                transform="rotate(-90 24 24)"
+                              />
+                              <text
+                                x="24"
+                                y="24"
+                                textAnchor="middle"
+                                dominantBaseline="central"
+                                fill="var(--text-primary)"
+                                fontSize="14"
+                                fontWeight="700"
+                                fontFamily="var(--font-barlow-condensed), var(--font-mono), sans-serif"
+                              >
+                                {score}
+                              </text>
+                            </svg>
+                            <span className="boarding-pass-gauge-label">{label}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  )}
 
                   {/* QR Codes */}
                   <div className="flex gap-3">

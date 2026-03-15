@@ -29,7 +29,7 @@ const Header = () => {
         <div className="flex items-center justify-between h-14">
           <a
             href="#"
-            aria-label={t("backToTop")}
+            aria-label={`Y.MARUYAMA — ${t("backToTop")}`}
             className="font-[family-name:var(--font-heading)] text-silver font-bold text-base tracking-widest hover:text-silver-light transition-colors"
           >
             Y.MARUYAMA<span className="cursor-blink text-silver-dim ml-0.5" aria-hidden="true">_</span>
@@ -89,7 +89,6 @@ const Header = () => {
         <div
           ref={menuRef}
           id="mobile-menu"
-          role="menu"
           className={`md:hidden overflow-hidden border-t border-silver-100 transition-[grid-template-rows,opacity] duration-300 ease-out grid ${
             isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
           }`}
@@ -97,10 +96,9 @@ const Header = () => {
           <div className="overflow-hidden">
             <ul className="py-3">
               {NAV_ITEMS.map((item, i) => (
-                <li key={item.href} role="none">
+                <li key={item.href}>
                   <a
                     href={item.href}
-                    role="menuitem"
                     onClick={closeMenu}
                     className="block py-3.5 px-3 text-xs tracking-nav text-text-secondary hover:text-silver transition-colors uppercase"
                   >
