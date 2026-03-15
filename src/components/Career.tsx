@@ -10,7 +10,7 @@ const Career = () => {
   const t = useTranslations("career");
 
   return (
-    <section id="career" className="py-28 px-5 sm:px-8 max-w-6xl mx-auto">
+    <section id="career" className="content-auto py-28 px-5 sm:px-8 max-w-6xl mx-auto">
       <motion.div {...FADE_IN} className="flex items-center gap-4 mb-16">
         <Text variant="overline" className="border border-silver-100 px-3 py-1.5" aria-hidden="true">
           03

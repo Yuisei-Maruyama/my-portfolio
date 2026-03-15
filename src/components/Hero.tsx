@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useCallback, useEffect } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue, useSpring, animate } from "framer-motion";
 import Image from "next/image";
 import Text from "./Typography";
 
@@ -42,8 +42,8 @@ const Hero = () => {
   const cardRef = useRef<HTMLElement>(null);
   const orbRefs = useRef<(HTMLDivElement | null)[]>([]);
   const perforationRef = useRef<HTMLDivElement>(null);
-  const trailRef = useRef<HTMLDivElement>(null);
-  const sparkRef = useRef<HTMLDivElement>(null);
+  const hitAreaRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const resetBtnRef = useRef<HTMLButtonElement>(null);
 
   // 3D tilt — MotionValue + Spring
@@ -52,11 +52,11 @@ const Hero = () => {
   const springRotateX = useSpring(rotateX, { stiffness: 300, damping: 30 });
   const springRotateY = useSpring(rotateY, { stiffness: 300, damping: 30 });
 
-  // Stub detach — MotionValue + Spring
+  // Stub detach — MotionValue + animate()
   const stubY = useMotionValue(0);
   const stubRotate = useMotionValue(0);
-  const springStubY = useSpring(stubY, { stiffness: 120, damping: 14, mass: 2 });
-  const springStubRotate = useSpring(stubRotate, { stiffness: 80, damping: 12, mass: 1.5 });
+  const stubX = useMotionValue(0);
+  const stubOpacity = useMotionValue(1);
 
   // Mouse tracking via CSS custom properties (no re-renders)
   useEffect(() => {
@@ -110,11 +110,14 @@ const Hero = () => {
     if (isTouchDevice || prefersReducedMotion) return;
 
     const perforation = perforationRef.current;
-    const trail = trailRef.current;
-    const spark = sparkRef.current;
+    const hitArea = hitAreaRef.current;
+    const canvas = canvasRef.current;
     const resetBtn = resetBtnRef.current;
     const card = cardRef.current;
-    if (!perforation || !trail || !spark || !resetBtn || !card) return;
+    if (!perforation || !hitArea || !canvas || !resetBtn || !card) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
     perforation.setAttribute("data-cuttable", "true");
 
@@ -125,6 +128,76 @@ const Hero = () => {
     let perfRect: DOMRect;
     let perfCenterY = 0;
     let rafId = 0;
+    let points: { x: number; y: number }[] = [];
+
+    const setupCanvas = () => {
+      perfRect = perforation.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = perfRect.width * dpr;
+      canvas.height = 80 * dpr;
+      canvas.style.width = `${perfRect.width}px`;
+      ctx.scale(dpr, dpr);
+    };
+
+    const drawTrail = () => {
+      if (points.length < 2) return;
+      const w = perfRect.width;
+      ctx.clearRect(0, 0, w, 80);
+
+      // Build path
+      const buildPath = () => {
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+        for (let i = 1; i < points.length; i++) {
+          const prev = points[i - 1];
+          const cur = points[i];
+          const mx = (prev.x + cur.x) / 2;
+          const my = (prev.y + cur.y) / 2;
+          ctx.quadraticCurveTo(prev.x, prev.y, mx, my);
+        }
+        const last = points[points.length - 1];
+        ctx.lineTo(last.x, last.y);
+      };
+
+      // Pass 1: Outer glow
+      ctx.save();
+      ctx.shadowBlur = 12;
+      ctx.shadowColor = "rgba(245, 245, 247, 0.4)";
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
+      ctx.lineWidth = 6;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      buildPath();
+      ctx.stroke();
+      ctx.restore();
+
+      // Pass 2: Main metallic line
+      ctx.save();
+      const grad = ctx.createLinearGradient(0, 0, w, 0);
+      grad.addColorStop(0, "#a0a0a0");
+      grad.addColorStop(0.5, "#f5f5f7");
+      grad.addColorStop(1, "#c0c0c8");
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 2;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      buildPath();
+      ctx.stroke();
+      ctx.restore();
+
+      // Pass 3: Spark at tip
+      const tip = points[points.length - 1];
+      const pulse = 0.5 + 0.5 * Math.sin(Date.now() / 150);
+      const sparkRadius = 3 + pulse * 2;
+      ctx.save();
+      ctx.shadowBlur = 8 + pulse * 6;
+      ctx.shadowColor = "#f5f5f7";
+      ctx.fillStyle = `rgba(245, 245, 247, ${0.6 + pulse * 0.4})`;
+      ctx.beginPath();
+      ctx.arc(tip.x, tip.y, sparkRadius, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    };
 
     const handleMouseDown = (e: MouseEvent) => {
       if (isCut) return;
@@ -134,45 +207,71 @@ const Hero = () => {
       const relX = e.clientX - perfRect.left;
       const relY = Math.abs(e.clientY - perfCenterY);
 
-      if (relX > perfRect.width * 0.15 || relY > 20) return;
+      if (relX > perfRect.width * 0.3 || relY > 40) return;
 
       cutting = true;
       startX = perfRect.left;
       progress = 0;
-      perforation.style.setProperty("--cut-progress", "0");
-      trail.style.transition = "none";
-      spark.style.display = "block";
+      points = [];
+
+      setupCanvas();
+      canvas.style.opacity = "1";
+      canvas.style.transition = "none";
+
+      // Add initial point
+      const canvasY = 40 + (e.clientY - perfCenterY);
+      points.push({ x: relX, y: Math.max(0, Math.min(80, canvasY)) });
+
       e.preventDefault();
     };
 
     const cancelCut = () => {
       cutting = false;
       progress = 0;
-      spark.style.display = "none";
-      trail.style.transition = "transform 0.3s ease-out";
-      perforation.style.setProperty("--cut-progress", "0");
+
+      canvas.style.transition = "opacity 0.3s ease-out";
+      canvas.style.opacity = "0";
+      const onFade = () => {
+        canvas.removeEventListener("transitionend", onFade);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        points = [];
+      };
+      canvas.addEventListener("transitionend", onFade);
     };
 
     const completeCut = () => {
       cutting = false;
       isCut = true;
       progress = 1;
-      perforation.style.setProperty("--cut-progress", "1");
       perforation.setAttribute("data-cut", "true");
-      spark.style.display = "none";
       card.style.overflow = "visible";
 
-      stubY.set(40);
-      stubRotate.set(1.5);
+      // Phase 1: snap down
+      const phase1 = animate(stubY, 12, {
+        type: "spring", stiffness: 300, damping: 20, mass: 0.8,
+      });
 
-      resetBtn.style.display = "flex";
+      phase1.then(() => {
+        // Phase 2: fly off
+        const vh = window.innerHeight;
+        const vw = window.innerWidth;
+        animate(stubY, -(vh * 1.2), { duration: 1.1, ease: "easeIn" });
+        animate(stubX, vw * 0.25, { duration: 1.1, ease: "easeOut" });
+        animate(stubRotate, -20, { duration: 1.1, ease: "easeIn" });
+        const fadeOut = animate(stubOpacity, 0, {
+          duration: 0.7, delay: 0.4, ease: "easeIn",
+        });
+        fadeOut.then(() => {
+          resetBtn.style.display = "flex";
+        });
+      });
     };
 
     const handleMouseMove = (e: MouseEvent) => {
       if (!cutting) return;
 
       const verticalDev = Math.abs(e.clientY - perfCenterY);
-      if (verticalDev > 30) {
+      if (verticalDev > 50) {
         cancelCut();
         return;
       }
@@ -184,13 +283,17 @@ const Hero = () => {
       if (newProgress <= progress) return;
       progress = newProgress;
 
+      // Add point (canvas-local coords)
+      const relX = e.clientX - perfRect.left;
+      const canvasY = 40 + (e.clientY - perfCenterY);
+      points.push({ x: relX, y: Math.max(0, Math.min(80, canvasY)) });
+
       if (rafId) return;
       rafId = requestAnimationFrame(() => {
         rafId = 0;
-        perforation.style.setProperty("--cut-progress", String(progress));
-        spark.style.left = `${progress * 100}%`;
+        drawTrail();
 
-        if (progress >= 0.95) {
+        if (progress >= 0.99) {
           completeCut();
         }
       });
@@ -205,34 +308,45 @@ const Hero = () => {
     const handleReattach = () => {
       isCut = false;
       progress = 0;
-      perforation.style.setProperty("--cut-progress", "0");
       perforation.removeAttribute("data-cut");
-      trail.style.transition = "transform 0.3s ease-out";
       card.style.overflow = "";
 
-      stubY.set(0);
-      stubRotate.set(0);
+      // Clear canvas
+      canvas.style.transition = "opacity 0.3s ease-out";
+      canvas.style.opacity = "0";
+      const onFade = () => {
+        canvas.removeEventListener("transitionend", onFade);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        points = [];
+      };
+      canvas.addEventListener("transitionend", onFade);
+
+      // Reset stub near original position then spring back
+      stubX.set(0);
+      stubY.set(16);
+      stubRotate.set(2);
+      stubOpacity.set(0);
+
+      animate(stubOpacity, 1, { duration: 0.25 });
+      animate(stubY, 0, { type: "spring", stiffness: 120, damping: 14, mass: 2 });
+      animate(stubRotate, 0, { type: "spring", stiffness: 80, damping: 12, mass: 1.5 });
 
       resetBtn.style.display = "none";
-
-      setTimeout(() => {
-        trail.style.transition = "none";
-      }, 300);
     };
 
-    perforation.addEventListener("mousedown", handleMouseDown);
+    hitArea.addEventListener("mousedown", handleMouseDown);
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
     window.addEventListener("mouseup", handleMouseUp);
     resetBtn.addEventListener("click", handleReattach);
 
     return () => {
-      perforation.removeEventListener("mousedown", handleMouseDown);
+      hitArea.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
       resetBtn.removeEventListener("click", handleReattach);
       if (rafId) cancelAnimationFrame(rafId);
     };
-  }, [stubY, stubRotate]);
+  }, [stubY, stubRotate, stubX, stubOpacity]);
 
   // Card mouse interaction — 3D tilt + surface specular
   const handleCardMouseMove = useCallback(
@@ -276,25 +390,25 @@ const Hero = () => {
       {/* Liquid mercury orbs */}
       <div
         ref={(el) => { orbRefs.current[0] = el; }}
-        className="orb absolute top-1/4 left-1/4 w-[320px] h-[320px] rounded-full blur-[80px]"
+        className="orb absolute top-1/4 left-1/4 w-[320px] h-[320px] rounded-full"
         style={{
-          background: "radial-gradient(circle, rgba(200, 200, 210, 0.14) 0%, rgba(192, 192, 200, 0.06) 40%, transparent 100%)",
+          background: "radial-gradient(circle, rgba(200, 200, 210, 0.10) 0%, rgba(192, 192, 200, 0.04) 25%, rgba(192, 192, 200, 0.01) 50%, transparent 70%)",
           animation: "orb-float-1 20s ease-in-out infinite",
         }}
       />
       <div
         ref={(el) => { orbRefs.current[1] = el; }}
-        className="orb absolute bottom-1/3 right-1/4 w-[260px] h-[260px] rounded-full blur-[60px]"
+        className="orb absolute bottom-1/3 right-1/4 w-[260px] h-[260px] rounded-full"
         style={{
-          background: "radial-gradient(circle, rgba(180, 190, 220, 0.16) 0%, rgba(192, 192, 200, 0.07) 40%, transparent 100%)",
+          background: "radial-gradient(circle, rgba(180, 190, 220, 0.12) 0%, rgba(192, 192, 200, 0.05) 25%, rgba(192, 192, 200, 0.01) 50%, transparent 70%)",
           animation: "orb-float-2 15s ease-in-out infinite",
         }}
       />
       <div
         ref={(el) => { orbRefs.current[2] = el; }}
-        className="orb absolute top-1/2 right-1/3 w-[220px] h-[220px] rounded-full blur-[70px]"
+        className="orb absolute top-1/2 right-1/3 w-[220px] h-[220px] rounded-full"
         style={{
-          background: "radial-gradient(circle, rgba(210, 200, 230, 0.14) 0%, rgba(245, 245, 247, 0.05) 40%, transparent 100%)",
+          background: "radial-gradient(circle, rgba(210, 200, 230, 0.10) 0%, rgba(245, 245, 247, 0.04) 25%, rgba(245, 245, 247, 0.01) 50%, transparent 70%)",
           animation: "orb-float-3 18s ease-in-out infinite",
         }}
       />
@@ -381,7 +495,7 @@ const Hero = () => {
                     <div className="flex lg:hidden items-start shrink-0">
                       <div className="boarding-pass-photo boarding-pass-photo-sm">
                         <Image
-                          src="/images/profile.png"
+                          src="/images/profile.webp"
                           alt="Yuisei Maruyama"
                           width={100}
                           height={100}
@@ -489,7 +603,7 @@ const Hero = () => {
                 <div className="hidden lg:flex items-start">
                   <div className="boarding-pass-photo">
                     <Image
-                      src="/images/profile.png"
+                      src="/images/profile.webp"
                       alt="Yuisei Maruyama"
                       width={180}
                       height={180}
@@ -507,14 +621,14 @@ const Hero = () => {
                 className="boarding-pass-perforation hidden lg:block"
                 aria-hidden="true"
               >
-                <div ref={trailRef} className="cut-trail" aria-hidden="true" tabIndex={-1} />
-                <div ref={sparkRef} className="cut-spark" aria-hidden="true" tabIndex={-1} />
+                <div ref={hitAreaRef} className="cut-hit-area" aria-hidden="true" />
+                <canvas ref={canvasRef} className="cut-canvas" aria-hidden="true" tabIndex={-1} />
               </div>
 
               {/* STUB (desktop) */}
               <motion.div
                 className="boarding-pass-stub hidden lg:flex"
-                style={{ y: springStubY, rotateZ: springStubRotate }}
+                style={{ y: stubY, x: stubX, rotate: stubRotate, opacity: stubOpacity }}
               >
                 <span className="text-silver/60 text-lg">✈</span>
                 <div>

@@ -286,3 +286,32 @@ rg "Yuinari|cyan|#06D8D7|glitch|scanline|neon|amber|Orbitron|bg-void" src/
 # アクセシビリティ自動チェック（導入済みの場合）
 # npx axe-core <URL>
 ```
+
+## Lighthouse 運用ルール
+
+### 実行方法
+
+```bash
+# ローカルで Lighthouse を実行
+pnpm build && pnpm start &
+sleep 3
+npx lighthouse http://localhost:3000 --output=json --output-path=/tmp/lh-report.json --chrome-flags="--headless"
+
+# スコア確認
+cat /tmp/lh-report.json | jq '.categories.performance.score * 100'
+
+# プロセス停止
+kill %1
+```
+
+### 閾値
+
+- **Performance**: 90 以上（目標 95+）
+- **Accessibility**: 90 以上
+- **Best Practices**: 90 以上
+- **SEO**: 90 以上
+
+### 運用
+
+- パフォーマンスに影響する変更（画像追加、フォント変更、アニメーション追加等）を行った際は、作業完了時に Lighthouse を実行してスコアを確認する
+- スコアが閾値を下回った場合は、原因を特定して修正してからコミットする

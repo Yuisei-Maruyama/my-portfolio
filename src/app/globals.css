@@ -156,7 +156,6 @@ a:focus-visible > .mirror-card {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  transition: --specular-x 0.1s, --specular-y 0.1s;
   pointer-events: none;
   user-select: none;
 }
@@ -429,7 +428,7 @@ a:focus-visible > .mirror-card {
   display: block;
   font-family: var(--font-bp), var(--font-mono), sans-serif;
   font-size: var(--text-detail);
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: 0.2em;
   color: var(--text-secondary);
   text-transform: uppercase;
@@ -533,48 +532,24 @@ img.boarding-pass-qr {
 }
 
 /* ═══ Scissors Cut Effect ═══ */
-.boarding-pass-perforation[data-cuttable="true"] {
-  cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='%23a0a0a0'/><stop offset='.5' stop-color='%23f5f5f7'/><stop offset='1' stop-color='%23c0c0c8'/></linearGradient></defs><circle cx='7' cy='8' r='4' fill='none' stroke='url(%23g)' stroke-width='1.5'/><circle cx='7' cy='24' r='4' fill='none' stroke='url(%23g)' stroke-width='1.5'/><line x1='10' y1='10' x2='28' y2='15' stroke='url(%23g)' stroke-width='2' stroke-linecap='round'/><line x1='10' y1='22' x2='28' y2='17' stroke='url(%23g)' stroke-width='2' stroke-linecap='round'/><circle cx='18' cy='16' r='1.5' fill='%23c0c0c8'/></svg>") 28 16, auto;
-}
-
-.cut-trail {
+.cut-hit-area {
   position: absolute;
-  top: -1px;
+  top: -40px;
+  bottom: -40px;
   left: 0;
   right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #a0a0a0, #f5f5f7 50%, #c0c0c8);
-  transform: scaleX(var(--cut-progress, 0));
-  transform-origin: left center;
-  pointer-events: none;
-  box-shadow: 0 0 4px rgba(245, 245, 247, 0.5), 0 0 8px rgba(192, 192, 200, 0.3);
-  z-index: 1;
+  cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='0'><stop offset='0' stop-color='%23a0a0a0'/><stop offset='.5' stop-color='%23f5f5f7'/><stop offset='1' stop-color='%23c0c0c8'/></linearGradient></defs><circle cx='7' cy='8' r='4' fill='none' stroke='url(%23g)' stroke-width='1.5'/><circle cx='7' cy='24' r='4' fill='none' stroke='url(%23g)' stroke-width='1.5'/><line x1='10' y1='10' x2='28' y2='15' stroke='url(%23g)' stroke-width='2' stroke-linecap='round'/><line x1='10' y1='22' x2='28' y2='17' stroke='url(%23g)' stroke-width='2' stroke-linecap='round'/><circle cx='18' cy='16' r='1.5' fill='%23c0c0c8'/></svg>") 28 16, auto;
+  z-index: 3;
 }
 
-.cut-spark {
+.cut-canvas {
   position: absolute;
-  top: -4px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #f5f5f7;
-  box-shadow: 0 0 6px #f5f5f7, 0 0 12px rgba(245, 245, 247, 0.6);
-  animation: spark-pulse 0.3s ease-in-out infinite;
-  display: none;
+  top: -40px;
+  left: 0;
+  width: 100%;
+  height: 80px;
   pointer-events: none;
-  transform: translateX(-50%);
-  z-index: 2;
-}
-
-@keyframes spark-pulse {
-  0%, 100% {
-    opacity: 1;
-    box-shadow: 0 0 6px #f5f5f7, 0 0 12px rgba(245, 245, 247, 0.6);
-  }
-  50% {
-    opacity: 0.6;
-    box-shadow: 0 0 10px #f5f5f7, 0 0 20px rgba(245, 245, 247, 0.8);
-  }
+  z-index: 1;
 }
 
 .boarding-pass-perforation[data-cut="true"] {
@@ -604,12 +579,8 @@ img.boarding-pass-qr {
 }
 
 @media (pointer: coarse) {
-  .boarding-pass-perforation[data-cuttable="true"] {
-    cursor: auto;
-  }
-
-  .cut-trail,
-  .cut-spark,
+  .cut-hit-area,
+  .cut-canvas,
   .cut-reset-btn {
     display: none !important;
   }
@@ -627,6 +598,12 @@ img.boarding-pass-qr {
   .boarding-pass-perforation {
     margin: 16px -16px;
   }
+}
+
+/* ═══ Below-fold render optimization ═══ */
+.content-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
 }
 
 /* ═══ Reduced Motion ═══ */
@@ -665,14 +642,10 @@ img.boarding-pass-qr {
     transform: none !important;
   }
 
-  .cut-trail,
-  .cut-spark,
+  .cut-hit-area,
+  .cut-canvas,
   .cut-reset-btn {
     display: none !important;
-  }
-
-  .boarding-pass-perforation[data-cuttable="true"] {
-    cursor: auto;
   }
 
   *,

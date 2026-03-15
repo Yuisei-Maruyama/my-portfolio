@@ -63,7 +63,7 @@ const Contact = () => {
   const t = useTranslations("contact");
 
   return (
-    <section id="contact" className="py-28 px-5 sm:px-8 max-w-6xl mx-auto">
+    <section id="contact" className="content-auto py-28 px-5 sm:px-8 max-w-6xl mx-auto">
       <motion.div {...FADE_IN} className="flex items-center gap-4 mb-16">
         <Text variant="overline" className="border border-silver-100 px-3 py-1.5" aria-hidden="true">
           05
