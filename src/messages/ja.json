@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "title": "Yuisei Maruyama | Frontend Engineer",
-    "description": "丸山唯成のポートフォリオサイト。React, Next.js, TypeScriptを中心としたフロントエンド開発を行うエンジニアです。サイバーエージェントにてECサイト開発に従事。",
-    "ogDescription": "React, Next.js, TypeScriptを中心としたフロントエンド開発。サイバーエージェントにてECサイト開発に従事。",
+    "title": "Yuisei Maruyama | Engineer",
+    "description": "丸山唯成のポートフォリオサイト。React, Next.js, TypeScriptを中心としたフロントエンド開発を行うエンジニアです。サイバーエージェントにて開発に従事。",
+    "ogDescription": "React, Next.js, TypeScriptを中心としたフロントエンド開発。サイバーエージェントにて開発に従事。",
     "twitterDescription": "React, Next.js, TypeScriptを中心としたフロントエンド開発。"
   },
   "hero": {
@@ -158,7 +158,7 @@
     }
   },
   "contact": {
-    "description": "お気軽にご連絡ください。\n新しいプロジェクトや技術的な議論を歓迎します。"
+    "description": "お気軽にご連絡ください。"
   },
   "footer": {
     "copyright": "Yuisei Maruyama"

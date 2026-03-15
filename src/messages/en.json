@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "title": "Yuisei Maruyama | Frontend Engineer",
-    "description": "Portfolio site of Yuisei Maruyama. A frontend engineer specializing in React, Next.js, and TypeScript. Currently working on EC site development at CyberAgent.",
-    "ogDescription": "Frontend development with React, Next.js, and TypeScript. EC site development at CyberAgent.",
+    "title": "Yuisei Maruyama | Engineer",
+    "description": "Portfolio site of Yuisei Maruyama. A frontend engineer specializing in React, Next.js, and TypeScript. Currently working at CyberAgent.",
+    "ogDescription": "Frontend development with React, Next.js, and TypeScript. Currently working at CyberAgent.",
     "twitterDescription": "Frontend development with React, Next.js, and TypeScript."
   },
   "hero": {
@@ -163,7 +163,7 @@
     }
   },
   "contact": {
-    "description": "Feel free to reach out.\nI welcome new projects and technical discussions."
+    "description": "Feel free to reach out."
   },
   "footer": {
     "copyright": "Yuisei Maruyama"
