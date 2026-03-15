@@ -5,7 +5,7 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   experimental: {
-    optimizePackageImports: ["framer-motion"],
+    optimizePackageImports: ["framer-motion", "react-icons"],
   },
   images: {
     formats: ["image/avif", "image/webp"],

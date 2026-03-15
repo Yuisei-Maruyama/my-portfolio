@@ -12,7 +12,7 @@ import "../globals.css";
 const syne = Syne({
   variable: "--font-syne",
   subsets: ["latin"],
-  weight: ["700", "800"],
+  weight: ["700"],
   display: "swap",
 });
 
@@ -100,7 +100,7 @@ const jsonLd = {
   jobTitle: "Frontend Engineer",
   description: "React, Next.js, TypeScriptを中心としたフロントエンド開発を行うエンジニア",
   url: "https://yuisei-maruyama.vercel.app",
-  sameAs: ["https://github.com/y-metro", "https://instagram.com/y_and_and"],
+  sameAs: ["https://github.com/Yuisei-Maruyama", "https://www.instagram.com/y_metro/", "https://x.com/y_metro1234"],
   knowsAbout: ["React", "Next.js", "TypeScript", "Vue.js", "Shopify", "Frontend Development"],
   worksFor: {
     "@type": "Organization",
@@ -122,6 +122,8 @@ const RootLayout = async ({
   return (
     <html lang={locale} className="dark">
       <head>
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

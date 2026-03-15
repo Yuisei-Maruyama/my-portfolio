@@ -488,7 +488,7 @@ const Hero = () => {
                       <span className="boarding-pass-label mb-1">Instagram</span>
                       <div className="boarding-pass-qr-wrapper">
                         <Image
-                          src="/images/insta.png"
+                          src="/images/insta.webp"
                           alt=""
                           width={140}
                           height={140}
