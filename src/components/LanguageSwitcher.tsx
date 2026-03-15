@@ -13,7 +13,7 @@ const LanguageSwitcher = () => {
   };
 
   return (
-    <div className="flex items-center gap-1 text-sm lg:text-md tracking-[0.1em]">
+    <div className="flex items-center gap-1 text-sm lg:text-md tracking-btn">
       <button
         onClick={() => switchLocale("ja")}
         className={`px-1.5 py-0.5 transition-colors duration-300 ${

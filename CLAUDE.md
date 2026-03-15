@@ -22,6 +22,8 @@
 
 ## Design System
 
+> **全実装で `tailwind.md` を参照すること。** デザイントークン（colors, fonts, spacing, borderRadius, letterSpacing, boxShadow, animation）の完全なリファレンスは [`tailwind.md`](./tailwind.md) に集約されている。ハードコード値ではなく、必ずトークンを使用すること。
+
 ### Colors
 
 | Token | Value | Usage |

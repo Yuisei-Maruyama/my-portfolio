@@ -37,7 +37,7 @@ const Works = () => {
                 <div className="flex items-center justify-between px-5 py-3 border-b border-silver-100">
                   <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-silver/30" aria-hidden="true" />
-                    <Text variant="overline" className="tracking-[0.15em] uppercase">
+                    <Text variant="overline" className="tracking-nav uppercase">
                       project_{String(i).padStart(2, "0")}
                     </Text>
                   </div>
@@ -46,7 +46,7 @@ const Works = () => {
                       href={work.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm lg:text-md tracking-[0.1em] text-silver/40 hover:text-silver transition-colors uppercase p-2 -m-2"
+                      className="text-sm lg:text-md tracking-btn text-silver/40 hover:text-silver transition-colors uppercase p-2 -m-2"
                       aria-label={`View ${t(`items.${work.id}.title`)} (opens in new tab)`}
                     >
                       open →
@@ -59,7 +59,7 @@ const Works = () => {
                   <h3 className="font-[family-name:var(--font-heading)] text-base font-bold text-text-primary mb-1">
                     {t(`items.${work.id}.title`)}
                   </h3>
-                  <Text variant="caption" as="p" className="tracking-[0.1em] mb-3">
+                  <Text variant="caption" as="p" className="tracking-btn mb-3">
                     {t(`items.${work.id}.role`)}
                   </Text>
 

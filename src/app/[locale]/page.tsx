@@ -19,15 +19,10 @@ const Home = async ({ params }: { params: Promise<{ locale: string }> }) => {
       <Header />
       <main>
         <Hero />
-        <div className="section-line" />
         <About />
-        <div className="section-line" />
         <Skills />
-        <div className="section-line" />
         <Career />
-        <div className="section-line" />
         <Works />
-        <div className="section-line" />
         <Contact />
       </main>
       <Footer />

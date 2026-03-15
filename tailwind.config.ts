@@ -48,6 +48,12 @@ const config: Config = {
           "'Noto Sans JP'",
           "monospace",
         ],
+        bp: [
+          "var(--font-barlow-condensed)",
+          "var(--font-geist-mono)",
+          "ui-monospace",
+          "sans-serif",
+        ],
       },
       fontSize: {
         xs: "12px",

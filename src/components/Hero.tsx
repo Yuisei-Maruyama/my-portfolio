@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useCallback, useEffect } from "react";
-import { motion, useMotionValue, useSpring, animate } from "framer-motion";
+import { useRef, useEffect } from "react";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Text from "./Typography";
 
@@ -44,19 +44,7 @@ const Hero = () => {
   const perforationRef = useRef<HTMLDivElement>(null);
   const hitAreaRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const resetBtnRef = useRef<HTMLButtonElement>(null);
-
-  // 3D tilt — MotionValue + Spring
-  const rotateX = useMotionValue(0);
-  const rotateY = useMotionValue(0);
-  const springRotateX = useSpring(rotateX, { stiffness: 300, damping: 30 });
-  const springRotateY = useSpring(rotateY, { stiffness: 300, damping: 30 });
-
-  // Stub detach — MotionValue + animate()
-  const stubY = useMotionValue(0);
-  const stubRotate = useMotionValue(0);
-  const stubX = useMotionValue(0);
-  const stubOpacity = useMotionValue(1);
+  const stubRef = useRef<HTMLDivElement>(null);
 
   // Mouse tracking via CSS custom properties (no re-renders)
   useEffect(() => {
@@ -112,9 +100,8 @@ const Hero = () => {
     const perforation = perforationRef.current;
     const hitArea = hitAreaRef.current;
     const canvas = canvasRef.current;
-    const resetBtn = resetBtnRef.current;
     const card = cardRef.current;
-    if (!perforation || !hitArea || !canvas || !resetBtn || !card) return;
+    if (!perforation || !hitArea || !canvas || !card) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -134,7 +121,7 @@ const Hero = () => {
       perfRect = perforation.getBoundingClientRect();
       const dpr = window.devicePixelRatio || 1;
       canvas.width = perfRect.width * dpr;
-      canvas.height = 80 * dpr;
+      canvas.height = 120 * dpr;
       canvas.style.width = `${perfRect.width}px`;
       ctx.scale(dpr, dpr);
     };
@@ -142,7 +129,7 @@ const Hero = () => {
     const drawTrail = () => {
       if (points.length < 2) return;
       const w = perfRect.width;
-      ctx.clearRect(0, 0, w, 80);
+      ctx.clearRect(0, 0, w, 120);
 
       // Build path
       const buildPath = () => {
@@ -207,7 +194,7 @@ const Hero = () => {
       const relX = e.clientX - perfRect.left;
       const relY = Math.abs(e.clientY - perfCenterY);
 
-      if (relX > perfRect.width * 0.3 || relY > 40) return;
+      if (relX > perfRect.width * 0.5 || relY > 60) return;
 
       cutting = true;
       startX = perfRect.left;
@@ -219,8 +206,8 @@ const Hero = () => {
       canvas.style.transition = "none";
 
       // Add initial point
-      const canvasY = 40 + (e.clientY - perfCenterY);
-      points.push({ x: relX, y: Math.max(0, Math.min(80, canvasY)) });
+      const canvasY = 60 + (e.clientY - perfCenterY);
+      points.push({ x: relX, y: Math.max(0, Math.min(120, canvasY)) });
 
       e.preventDefault();
     };
@@ -244,34 +231,18 @@ const Hero = () => {
       isCut = true;
       progress = 1;
       perforation.setAttribute("data-cut", "true");
-      card.style.overflow = "visible";
 
-      // Phase 1: snap down
-      const phase1 = animate(stubY, 12, {
-        type: "spring", stiffness: 300, damping: 20, mass: 0.8,
-      });
-
-      phase1.then(() => {
-        // Phase 2: fly off
-        const vh = window.innerHeight;
-        const vw = window.innerWidth;
-        animate(stubY, -(vh * 1.2), { duration: 1.1, ease: "easeIn" });
-        animate(stubX, vw * 0.25, { duration: 1.1, ease: "easeOut" });
-        animate(stubRotate, -20, { duration: 1.1, ease: "easeIn" });
-        const fadeOut = animate(stubOpacity, 0, {
-          duration: 0.7, delay: 0.4, ease: "easeIn",
-        });
-        fadeOut.then(() => {
-          resetBtn.style.display = "flex";
-        });
-      });
+      // Hide perforation + stub area
+      perforation.style.display = "none";
+      const stub = stubRef.current;
+      if (stub) stub.style.display = "none";
     };
 
     const handleMouseMove = (e: MouseEvent) => {
       if (!cutting) return;
 
       const verticalDev = Math.abs(e.clientY - perfCenterY);
-      if (verticalDev > 50) {
+      if (verticalDev > 80) {
         cancelCut();
         return;
       }
@@ -285,8 +256,8 @@ const Hero = () => {
 
       // Add point (canvas-local coords)
       const relX = e.clientX - perfRect.left;
-      const canvasY = 40 + (e.clientY - perfCenterY);
-      points.push({ x: relX, y: Math.max(0, Math.min(80, canvasY)) });
+      const canvasY = 60 + (e.clientY - perfCenterY);
+      points.push({ x: relX, y: Math.max(0, Math.min(120, canvasY)) });
 
       if (rafId) return;
       rafId = requestAnimationFrame(() => {
@@ -305,82 +276,22 @@ const Hero = () => {
       }
     };
 
-    const handleReattach = () => {
-      isCut = false;
-      progress = 0;
-      perforation.removeAttribute("data-cut");
-      card.style.overflow = "";
-
-      // Clear canvas
-      canvas.style.transition = "opacity 0.3s ease-out";
-      canvas.style.opacity = "0";
-      const onFade = () => {
-        canvas.removeEventListener("transitionend", onFade);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        points = [];
-      };
-      canvas.addEventListener("transitionend", onFade);
-
-      // Reset stub near original position then spring back
-      stubX.set(0);
-      stubY.set(16);
-      stubRotate.set(2);
-      stubOpacity.set(0);
-
-      animate(stubOpacity, 1, { duration: 0.25 });
-      animate(stubY, 0, { type: "spring", stiffness: 120, damping: 14, mass: 2 });
-      animate(stubRotate, 0, { type: "spring", stiffness: 80, damping: 12, mass: 1.5 });
-
-      resetBtn.style.display = "none";
-    };
-
     hitArea.addEventListener("mousedown", handleMouseDown);
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
     window.addEventListener("mouseup", handleMouseUp);
-    resetBtn.addEventListener("click", handleReattach);
 
     return () => {
       hitArea.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
-      resetBtn.removeEventListener("click", handleReattach);
       if (rafId) cancelAnimationFrame(rafId);
     };
-  }, [stubY, stubRotate, stubX, stubOpacity]);
-
-  // Card mouse interaction — 3D tilt + surface specular
-  const handleCardMouseMove = useCallback(
-    (e: React.MouseEvent<HTMLElement>) => {
-      if (typeof window === "undefined" || window.innerWidth < 1024) return;
-      const card = cardRef.current;
-      if (!card) return;
-
-      const rect = card.getBoundingClientRect();
-      const centerX = rect.left + rect.width / 2;
-      const centerY = rect.top + rect.height / 2;
-      const offsetX = (e.clientX - centerX) / (rect.width / 2);
-      const offsetY = (e.clientY - centerY) / (rect.height / 2);
-
-      rotateX.set(-offsetY * 3);
-      rotateY.set(offsetX * 3);
-
-      const relX = e.clientX - rect.left;
-      const relY = e.clientY - rect.top;
-      card.style.setProperty("--card-specular-x", `${relX}px`);
-      card.style.setProperty("--card-specular-y", `${relY}px`);
-    },
-    [rotateX, rotateY],
-  );
-
-  const handleCardMouseLeave = useCallback(() => {
-    rotateX.set(0);
-    rotateY.set(0);
-  }, [rotateX, rotateY]);
+  }, []);
 
   return (
     <section
       ref={sectionRef}
-      className="hero-section relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="hero-section relative min-h-screen flex items-center justify-center overflow-hidden pt-24 lg:pt-32"
       style={{ "--mouse-active": "0" } as React.CSSProperties}
     >
       {/* Mouse-following chrome specular reflection — pure CSS driven */}
@@ -438,34 +349,19 @@ const Hero = () => {
       <div className="relative z-10 w-full max-w-4xl mx-auto px-6 sm:px-8">
         <motion.div variants={container} initial="hidden" animate="visible">
           {/* Boarding Pass Card */}
-          <motion.div variants={line} style={{ perspective: 1000 }}>
-            <motion.article
+          <motion.div variants={line}>
+            <article
               ref={cardRef}
               className="boarding-pass"
               aria-label="Profile boarding pass"
-              onMouseMove={handleCardMouseMove}
-              onMouseLeave={handleCardMouseLeave}
-              style={{
-                rotateX: springRotateX,
-                rotateY: springRotateY,
-              }}
             >
-              {/* Card surface specular overlay */}
-              <div
-                className="absolute inset-0 pointer-events-none rounded-xl z-10"
-                style={{
-                  background:
-                    "radial-gradient(400px circle at var(--card-specular-x, 50%) var(--card-specular-y, 50%), rgba(255,255,255,0.06), transparent 60%)",
-                }}
-                aria-hidden="true"
-              />
 
               {/* HEADER */}
               <div className="boarding-pass-header">
-                <span className="boarding-pass-label tracking-[0.2em]">
+                <span className="boarding-pass-label tracking-label">
                   ✈ BOARDING PASS
                 </span>
-                <span className="boarding-pass-label tracking-[0.15em]">
+                <span className="boarding-pass-label tracking-nav">
                   CHROME AIRWAYS
                 </span>
               </div>
@@ -586,16 +482,34 @@ const Hero = () => {
                     </div>
                   </div>
 
-                  {/* QR Code */}
-                  <div className="boarding-pass-qr-wrapper" aria-hidden="true">
-                    <Image
-                      src="/images/insta.png"
-                      alt=""
-                      width={140}
-                      height={140}
-                      className="boarding-pass-qr"
-                      sizes="140px"
-                    />
+                  {/* QR Codes */}
+                  <div className="flex gap-3">
+                    <div aria-hidden="true">
+                      <span className="boarding-pass-label mb-1">Instagram</span>
+                      <div className="boarding-pass-qr-wrapper">
+                        <Image
+                          src="/images/insta.png"
+                          alt=""
+                          width={140}
+                          height={140}
+                          className="boarding-pass-qr"
+                          sizes="140px"
+                        />
+                      </div>
+                    </div>
+                    <div aria-hidden="true">
+                      <span className="boarding-pass-label mb-1">X</span>
+                      <div className="boarding-pass-qr-wrapper">
+                        <Image
+                          src="/images/x.svg"
+                          alt=""
+                          width={140}
+                          height={140}
+                          className="boarding-pass-qr"
+                          sizes="140px"
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -626,11 +540,15 @@ const Hero = () => {
               </div>
 
               {/* STUB (desktop) */}
-              <motion.div
+              <div
+                ref={stubRef}
                 className="boarding-pass-stub hidden lg:flex"
-                style={{ y: stubY, x: stubX, rotate: stubRotate, opacity: stubOpacity }}
               >
                 <span className="text-silver/60 text-lg">✈</span>
+                <div>
+                  <span className="boarding-pass-label">PASSENGER</span>
+                  <div className="boarding-pass-value text-sm">YUISEI MARUYAMA</div>
+                </div>
                 <div>
                   <span className="boarding-pass-label">SEAT</span>
                   <div className="boarding-pass-value text-sm">03</div>
@@ -639,21 +557,12 @@ const Hero = () => {
                   <span className="boarding-pass-label">GATE</span>
                   <div className="boarding-pass-value text-sm">2020</div>
                 </div>
-                <span className="boarding-pass-label tracking-[0.15em] self-center">
+                <span className="boarding-pass-label tracking-nav self-center">
                   TYO → ∞
                 </span>
-              </motion.div>
+              </div>
 
-              {/* Reattach button (visible after cut) */}
-              <button
-                ref={resetBtnRef}
-                className="cut-reset-btn"
-                aria-hidden="true"
-                tabIndex={-1}
-              >
-                ↺ Reattach
-              </button>
-            </motion.article>
+            </article>
           </motion.div>
 
           {/* Scroll indicator */}

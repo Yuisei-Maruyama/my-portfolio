@@ -26,7 +26,7 @@ const About = () => {
         transition={{ duration: 0.7, delay: 0.1 }}
       >
         <div className="mirror-card rounded-sm p-6 sm:p-8 corner-frame max-w-3xl">
-          <Text variant="overline" as="p" className="tracking-[0.2em] mb-6 uppercase" aria-hidden="true">
+          <Text variant="overline" as="p" className="tracking-label mb-6 uppercase" aria-hidden="true">
             &gt; cat profile.md
           </Text>
           <div className="space-y-4 text-text-secondary text-sm leading-[1.8]">

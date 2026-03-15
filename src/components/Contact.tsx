@@ -25,6 +25,12 @@ const InstagramIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+const XIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
+
 const MailIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
     <rect x="2" y="4" width="20" height="16" rx="2" />
@@ -35,9 +41,15 @@ const MailIcon = ({ className }: { className?: string }) => (
 const contacts = [
   {
     label: "GitHub",
-    href: "https://github.com/y-metro",
+    href: "https://github.com/Yuisei-Maruyama",
     icon: GitHubIcon,
-    value: "y-metro",
+    value: "Yuisei-Maruyama",
+  },
+  {
+    label: "X (Twitter)",
+    href: "https://x.com/y_metro1234",
+    icon: XIcon,
+    value: "@y_metro1234",
   },
   {
     label: "note",
@@ -47,15 +59,15 @@ const contacts = [
   },
   {
     label: "Instagram",
-    href: "https://instagram.com/y_and_and",
+    href: "https://www.instagram.com/y_metro/?hl=ja",
     icon: InstagramIcon,
-    value: "@y_and_and",
+    value: "@y_metro",
   },
   {
     label: "Email",
-    href: "mailto:yuinari0720@gmail.com",
+    href: "mailto:yuisei.work@gmail.com",
     icon: MailIcon,
-    value: "yuinari0720@gmail.com",
+    value: "yuisei.work@gmail.com",
   },
 ];
 
@@ -82,7 +94,7 @@ const Contact = () => {
         {t("description")}
       </motion.p>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {contacts.map((contact, i) => {
           const Icon = contact.icon;
           return (
@@ -99,7 +111,7 @@ const Contact = () => {
               className="group mirror-card rounded-sm p-6 text-center"
             >
               <Icon className="w-6 h-6 text-silver/50 group-hover:text-silver mx-auto mb-3 transition-colors duration-300" />
-              <Text variant="label" as="p" className="tracking-[0.15em] mb-1">
+              <Text variant="label" as="p" className="tracking-nav mb-1">
                 {contact.label}
               </Text>
               <Text variant="caption" as="p">{contact.value}</Text>

@@ -43,11 +43,11 @@ const Career = () => {
                   <h3 className="font-[family-name:var(--font-heading)] text-lg font-bold text-text-primary">
                     {t(`companies.${career.id}.company`)}
                   </h3>
-                  <Text variant="caption" className="tracking-[0.15em] shrink-0">
+                  <Text variant="caption" className="tracking-nav shrink-0">
                     {career.period}
                   </Text>
                 </div>
-                <Text variant="caption" as="p" className="tracking-[0.15em] mb-6">
+                <Text variant="caption" as="p" className="tracking-nav mb-6">
                   {t(`companies.${career.id}.role`)}
                 </Text>
 

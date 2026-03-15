@@ -15,7 +15,7 @@ const variantConfig: Record<Variant, { defaultTag: As; className: string }> = {
   label: {
     defaultTag: "span",
     className:
-      "block font-[family-name:var(--font-mono)] text-sm lg:text-md tracking-[0.2em] text-text-secondary uppercase",
+      "block font-[family-name:var(--font-mono)] text-sm lg:text-md tracking-label text-text-secondary uppercase",
   },
   value: {
     defaultTag: "div",
@@ -33,12 +33,12 @@ const variantConfig: Record<Variant, { defaultTag: As; className: string }> = {
   overline: {
     defaultTag: "span",
     className:
-      "font-[family-name:var(--font-display)] text-sm lg:text-md tracking-[0.3em] text-text-secondary",
+      "font-[family-name:var(--font-display)] text-sm lg:text-md tracking-display text-text-secondary",
   },
   tag: {
     defaultTag: "span",
     className:
-      "font-[family-name:var(--font-mono)] text-sm lg:text-md tracking-[0.05em] text-silver",
+      "font-[family-name:var(--font-mono)] text-sm lg:text-md tracking-tag text-silver",
   },
 };
 
