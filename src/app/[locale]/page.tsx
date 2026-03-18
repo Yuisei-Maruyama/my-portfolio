@@ -3,6 +3,7 @@ import { setRequestLocale } from "next-intl/server";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Footer from "@/components/Footer";
+import SkyParallaxBackground from "@/components/SkyParallaxBackground";
 import { getLighthouseScores } from "@/lib/lighthouse";
 
 const About = dynamic(() => import("@/components/About"));
@@ -18,9 +19,10 @@ const Home = async ({ params }: { params: Promise<{ locale: string }> }) => {
   const lighthouseScores = await getLighthouseScores();
 
   return (
-    <div>
+    <div className="relative">
+      <SkyParallaxBackground />
       <Header />
-      <main>
+      <main className="relative z-10">
         <Hero lighthouseScores={lighthouseScores} />
         <About />
         <Skills />

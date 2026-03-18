@@ -34,6 +34,20 @@ const DEFAULT_SCORES = [
 const GAUGE_RADIUS = 20;
 const GAUGE_CIRCUMFERENCE = 2 * Math.PI * GAUGE_RADIUS;
 
+const COUNTUP_DURATION = 1200;
+const animateCountUp = (elements: SVGTextElement[], targets: number[]) => {
+  const start = performance.now();
+  const tick = (now: number) => {
+    const progress = Math.min((now - start) / COUNTUP_DURATION, 1);
+    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+    elements.forEach((el, i) => {
+      el.textContent = String(Math.round(eased * targets[i]));
+    });
+    if (progress < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+};
+
 const FLIGHT_LOG = [
   { flag: "\u{1F1FA}\u{1F1F8}", codes: ["IAD", "BWI"] },
   { flag: "\u{1F1EB}\u{1F1F7}", codes: ["CDG"] },
@@ -60,6 +74,7 @@ const Hero = ({ lighthouseScores }: HeroProps) => {
   const hitAreaRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stubRef = useRef<HTMLDivElement>(null);
+  const scoreTextRefs = useRef<(SVGTextElement | null)[]>([]);
 
   const scores = lighthouseScores
     ? DEFAULT_SCORES.map(({ key, label }) => ({
@@ -311,6 +326,46 @@ const Hero = ({ lighthouseScores }: HeroProps) => {
     };
   }, []);
 
+  // Lighthouse score count-up animation
+  useEffect(() => {
+    const elements = scoreTextRefs.current.filter(Boolean) as SVGTextElement[];
+    if (elements.length === 0) return;
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) {
+      // Show final values immediately
+      elements.forEach((el) => {
+        el.textContent = el.getAttribute("data-target") ?? "0";
+      });
+      return;
+    }
+
+    // Start with 0
+    elements.forEach((el) => { el.textContent = "0"; });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const targets = elements.map((el) => Number(el.getAttribute("data-target") ?? "0"));
+            animateCountUp(elements, targets);
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.3 },
+    );
+
+    // Observe the first gauge element's parent SVG
+    const firstEl = elements[0];
+    if (firstEl) {
+      const svg = firstEl.closest("svg");
+      if (svg) observer.observe(svg);
+    }
+
+    return () => observer.disconnect();
+  }, [scores]);
+
   return (
     <section
       ref={sectionRef}
@@ -510,7 +565,7 @@ const Hero = ({ lighthouseScores }: HeroProps) => {
                   <div>
                     <span className="boarding-pass-label">LIGHTHOUSE</span>
                     <div className="flex items-center gap-4 sm:gap-6 lg:gap-8 mt-3">
-                      {scores.map(({ key, label, score }) => {
+                      {scores.map(({ key, label, score }, i) => {
                         const strokeColor = score >= 90 ? "#0cce6b" : score >= 50 ? "#ffa400" : "#ff4e42";
                         const dashLen = (GAUGE_CIRCUMFERENCE * score) / 100;
                         return (
@@ -542,6 +597,8 @@ const Hero = ({ lighthouseScores }: HeroProps) => {
                                 transform="rotate(-90 24 24)"
                               />
                               <text
+                                ref={(el) => { scoreTextRefs.current[i] = el; }}
+                                data-target={score}
                                 x="24"
                                 y="24"
                                 textAnchor="middle"

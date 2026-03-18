@@ -623,6 +623,112 @@ img.boarding-pass-qr {
   }
 }
 
+/* ═══════════════════════════════════════════
+   Sky Parallax Background — Window Scenery
+   ─ スクロール = フライト進行
+   ─ 窓の中: 星雲 → 世界 → 天の川 のクロスフェード
+   ─ CSS scroll-driven animations（JS ゼロ）
+   ═══════════════════════════════════════════ */
+.sky-parallax-root {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  contain: strict;
+  pointer-events: none;
+}
+
+.sky-scenery,
+.sky-window-frame,
+.sky-vignette {
+  position: absolute;
+  inset: 0;
+}
+
+/* Scenery layers — window mask で窓の中だけ表示 */
+.sky-scenery {
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  -webkit-mask-image: url("/images/window-mask-luma.webp");
+  mask-image: url("/images/window-mask-luma.webp");
+  -webkit-mask-mode: luminance;
+  mask-mode: luminance;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.sky-scenery-1 { background-image: url("/images/window_01.webp"); }
+.sky-scenery-2 { background-image: url("/images/window_02.webp"); }
+.sky-scenery-3 { background-image: url("/images/window_03.webp"); }
+
+/* Window frame overlay */
+.sky-window-frame {
+  background: url("/images/window-frame.webp") center / cover no-repeat;
+  opacity: 0.6;
+}
+
+/* Vignette — edge darkening */
+.sky-vignette {
+  background: radial-gradient(
+    ellipse 70% 60% at 50% 50%,
+    transparent 50%,
+    rgba(9, 9, 11, 0.6) 100%
+  );
+}
+
+/* ─── Scroll-driven cross-fade (progressive enhancement) ─── */
+@supports (animation-timeline: scroll()) {
+  /* Scenery 1: 画像1 — 0%~50% でゆっくりフェードアウト */
+  @keyframes scenery-fade-1 {
+    0%   { opacity: 0.7; }
+    30%  { opacity: 0.7; }
+    55%  { opacity: 0; }
+    100% { opacity: 0; }
+  }
+
+  /* Scenery 2: 画像2 — 35%~75% でクロスフェード */
+  @keyframes scenery-fade-2 {
+    0%   { opacity: 0; }
+    30%  { opacity: 0; }
+    50%  { opacity: 0.7; }
+    65%  { opacity: 0.7; }
+    85%  { opacity: 0; }
+    100% { opacity: 0; }
+  }
+
+  /* Scenery 3: 画像3 — 65%~100% でゆっくりフェードイン */
+  @keyframes scenery-fade-3 {
+    0%   { opacity: 0; }
+    65%  { opacity: 0; }
+    82%  { opacity: 0.7; }
+    100% { opacity: 0.7; }
+  }
+
+  .sky-scenery-1 {
+    animation: scenery-fade-1 linear both;
+    animation-timeline: scroll();
+  }
+
+  .sky-scenery-2 {
+    animation: scenery-fade-2 linear both;
+    animation-timeline: scroll();
+  }
+
+  .sky-scenery-3 {
+    animation: scenery-fade-3 linear both;
+    animation-timeline: scroll();
+  }
+}
+
+/* ─── Fallback: 非対応ブラウザは最初の画像を静的表示 ─── */
+@supports not (animation-timeline: scroll()) {
+  .sky-scenery-1 {
+    opacity: 0.7;
+  }
+}
+
 /* ═══ Below-fold render optimization ═══ */
 .content-auto {
   content-visibility: auto;
@@ -671,6 +777,15 @@ img.boarding-pass-qr {
 
   .orb {
     animation: none !important;
+  }
+
+  .sky-scenery {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+
+  .sky-scenery-1 {
+    opacity: 0.7 !important;
   }
 
   .gauge-circle {
