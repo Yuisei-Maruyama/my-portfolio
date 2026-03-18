@@ -635,7 +635,7 @@ const Hero = ({ lighthouseScores }: HeroProps) => {
                       </div>
                     </div>
                     <div aria-hidden="true">
-                      <span className="boarding-pass-label mb-1">X</span>
+                      <span className="boarding-pass-label mb-1">X(Twitter)</span>
                       <div className="boarding-pass-qr-wrapper">
                         <Image
                           src="/images/x.svg"
