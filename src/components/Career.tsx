@@ -34,7 +34,7 @@ const Career = () => {
               className="relative pl-10 md:pl-14"
             >
               {/* Timeline dot */}
-              <div className="absolute left-0 md:left-1 top-2 w-[15px] h-[15px] rounded-full border-2 border-silver bg-bg-primary pulse-dot" aria-hidden="true" />
+              <div className="absolute left-0 md:left-1 top-2 w-[15px] h-[15px] rounded-full border-2 border-silver bg-primary pulse-dot" aria-hidden="true" />
 
               {/* Company card */}
               <div className="mirror-card rounded-sm p-6 sm:p-8">

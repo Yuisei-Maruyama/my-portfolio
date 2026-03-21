@@ -11,26 +11,7 @@ const config: Config = {
   content: ["./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
-      colors: {
-        "bg-primary": "#09090B",
-        "bg-surface": "#111114",
-        "bg-card": "#18181B",
-        "bg-card-hover": "#1F1F23",
-        silver: {
-          DEFAULT: "#C0C0C8",
-          50: "rgba(192, 192, 200, 0.06)",
-          100: "rgba(192, 192, 200, 0.12)",
-          200: "rgba(192, 192, 200, 0.25)",
-          300: "rgba(192, 192, 200, 0.40)",
-          400: "rgba(192, 192, 200, 0.60)",
-          light: "#E8E8EC",
-          bright: "#F5F5F7",
-          dim: "#6B6B78",
-        },
-        primary: "#EDEDF0",
-        secondary: "#9898A1",
-        muted: "#52525B",
-      },
+      colors: {},
       fontFamily: {
         display: ["var(--font-syne)", "system-ui", "sans-serif"],
         heading: ["var(--font-syne)", "system-ui", "sans-serif"],

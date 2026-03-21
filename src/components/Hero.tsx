@@ -1,26 +1,11 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, use, Suspense } from "react";
 import { m } from "framer-motion";
 import Image from "next/image";
 import Text from "./Typography";
 import type { LighthouseScores } from "@/lib/lighthouse";
 
-const container = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
-  },
-};
-
-const line = {
-  hidden: { opacity: 0, y: 15 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7 },
-  },
-};
 
 const PARALLAX_FACTORS = [0.02, 0.03, 0.04];
 
@@ -48,6 +33,124 @@ const animateCountUp = (elements: SVGTextElement[], targets: number[]) => {
   requestAnimationFrame(tick);
 };
 
+const SKELETON_LABELS = ["PERF", "A11Y", "BP", "SEO"] as const;
+
+const LighthouseGaugeSkeleton = () => (
+  <div>
+    <span className="boarding-pass-label">LIGHTHOUSE</span>
+    <div className="flex items-center gap-4 sm:gap-6 lg:gap-8 mt-3">
+      {SKELETON_LABELS.map((label) => (
+        <div key={label} className="flex flex-col items-center gap-1 lg:gap-1.5">
+          <div className="w-12 h-12 lg:w-16 lg:h-16 rounded-full bg-white/5 animate-pulse" />
+          <span className="boarding-pass-gauge-label">{label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+const LighthouseGaugesInner = ({
+  scoresPromise,
+}: {
+  scoresPromise: Promise<LighthouseScores | null>;
+}) => {
+  const lighthouseScores = use(scoresPromise);
+  const scoreTextRefs = useRef<(SVGTextElement | null)[]>([]);
+
+  const scores = lighthouseScores
+    ? DEFAULT_SCORES.map(({ key, label }) => ({
+        key,
+        label,
+        score: lighthouseScores[key as keyof LighthouseScores],
+      }))
+    : null;
+
+  useEffect(() => {
+    const elements = scoreTextRefs.current.filter(Boolean) as SVGTextElement[];
+    if (elements.length === 0) return;
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) {
+      elements.forEach((el) => { el.textContent = el.getAttribute("data-target") ?? "0"; });
+      return;
+    }
+
+    elements.forEach((el) => { el.textContent = "0"; });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const targets = elements.map((el) => Number(el.getAttribute("data-target") ?? "0"));
+            animateCountUp(elements, targets);
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.3 },
+    );
+
+    const firstEl = elements[0];
+    if (firstEl) {
+      const svg = firstEl.closest("svg");
+      if (svg) observer.observe(svg);
+    }
+
+    return () => observer.disconnect();
+  }, [scores]);
+
+  if (!scores) return null;
+
+  return (
+    <div>
+      <span className="boarding-pass-label">LIGHTHOUSE</span>
+      <div className="flex items-center gap-4 sm:gap-6 lg:gap-8 mt-3">
+        {scores.map(({ key, label, score }, i) => {
+          const strokeColor = score >= 90 ? "#0cce6b" : score >= 50 ? "#ffa400" : "#ff4e42";
+          const dashLen = (GAUGE_CIRCUMFERENCE * score) / 100;
+          return (
+            <div key={key} className="flex flex-col items-center gap-1 lg:gap-1.5">
+              <svg
+                className="w-12 h-12 lg:w-16 lg:h-16"
+                viewBox="0 0 48 48"
+                role="img"
+                aria-label={`${label} ${score}`}
+              >
+                <circle cx="24" cy="24" r={GAUGE_RADIUS} fill="none" stroke="rgba(192,192,200,0.12)" strokeWidth="3" />
+                <circle
+                  cx="24" cy="24" r={GAUGE_RADIUS}
+                  fill="none" stroke={strokeColor} strokeWidth="3"
+                  className="gauge-circle"
+                  style={{ "--dash-len": `${dashLen}` } as React.CSSProperties}
+                  strokeLinecap="round" transform="rotate(-90 24 24)"
+                />
+                <text
+                  ref={(el) => { scoreTextRefs.current[i] = el; }}
+                  data-target={score}
+                  x="24" y="24"
+                  textAnchor="middle" dominantBaseline="central"
+                  fill="var(--text-primary)"
+                  fontSize="14" fontWeight="700"
+                  fontFamily="var(--font-mono), sans-serif"
+                >
+                  {score}
+                </text>
+              </svg>
+              <span className="boarding-pass-gauge-label">{label}</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+const LighthouseGauges = ({ scoresPromise }: { scoresPromise: Promise<LighthouseScores | null> }) => (
+  <Suspense fallback={<LighthouseGaugeSkeleton />}>
+    <LighthouseGaugesInner scoresPromise={scoresPromise} />
+  </Suspense>
+);
+
 const FLIGHT_LOG = [
   { flag: "\u{1F1FA}\u{1F1F8}", codes: ["IAD", "BWI"] },
   { flag: "\u{1F1EB}\u{1F1F7}", codes: ["CDG"] },
@@ -63,7 +166,7 @@ const FLIGHT_LOG = [
 ];
 
 type HeroProps = {
-  lighthouseScores: LighthouseScores | null;
+  lighthouseScores: Promise<LighthouseScores | null>;
 };
 
 const Hero = ({ lighthouseScores }: HeroProps) => {
@@ -74,15 +177,6 @@ const Hero = ({ lighthouseScores }: HeroProps) => {
   const hitAreaRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const stubRef = useRef<HTMLDivElement>(null);
-  const scoreTextRefs = useRef<(SVGTextElement | null)[]>([]);
-
-  const scores = lighthouseScores
-    ? DEFAULT_SCORES.map(({ key, label }) => ({
-        key,
-        label,
-        score: lighthouseScores[key as keyof LighthouseScores],
-      }))
-    : null;
 
   // Mouse tracking via CSS custom properties (no re-renders)
   useEffect(() => {
@@ -326,45 +420,6 @@ const Hero = ({ lighthouseScores }: HeroProps) => {
     };
   }, []);
 
-  // Lighthouse score count-up animation
-  useEffect(() => {
-    const elements = scoreTextRefs.current.filter(Boolean) as SVGTextElement[];
-    if (elements.length === 0) return;
-
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) {
-      // Show final values immediately
-      elements.forEach((el) => {
-        el.textContent = el.getAttribute("data-target") ?? "0";
-      });
-      return;
-    }
-
-    // Start with 0
-    elements.forEach((el) => { el.textContent = "0"; });
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const targets = elements.map((el) => Number(el.getAttribute("data-target") ?? "0"));
-            animateCountUp(elements, targets);
-            observer.disconnect();
-          }
-        });
-      },
-      { threshold: 0.3 },
-    );
-
-    // Observe the first gauge element's parent SVG
-    const firstEl = elements[0];
-    if (firstEl) {
-      const svg = firstEl.closest("svg");
-      if (svg) observer.observe(svg);
-    }
-
-    return () => observer.disconnect();
-  }, [scores]);
 
   return (
     <section
@@ -425,9 +480,9 @@ const Hero = ({ lighthouseScores }: HeroProps) => {
       />
 
       <div className="relative z-10 w-full max-w-4xl mx-auto px-6 sm:px-8">
-        <m.div variants={container} initial="hidden" animate="visible">
+        <div>
           {/* Boarding Pass Card */}
-          <m.div variants={line}>
+          <div>
             <article
               ref={cardRef}
               className="boarding-pass"
@@ -561,63 +616,7 @@ const Hero = ({ lighthouseScores }: HeroProps) => {
                   </div>
 
                   {/* LIGHTHOUSE SCORES */}
-                  {scores && (
-                  <div>
-                    <span className="boarding-pass-label">LIGHTHOUSE</span>
-                    <div className="flex items-center gap-4 sm:gap-6 lg:gap-8 mt-3">
-                      {scores.map(({ key, label, score }, i) => {
-                        const strokeColor = score >= 90 ? "#0cce6b" : score >= 50 ? "#ffa400" : "#ff4e42";
-                        const dashLen = (GAUGE_CIRCUMFERENCE * score) / 100;
-                        return (
-                          <div key={key} className="flex flex-col items-center gap-1 lg:gap-1.5">
-                            <svg
-                              className="w-12 h-12 lg:w-16 lg:h-16"
-                              viewBox="0 0 48 48"
-                              role="img"
-                              aria-label={`${label} ${score}`}
-                            >
-                              <circle
-                                cx="24"
-                                cy="24"
-                                r={GAUGE_RADIUS}
-                                fill="none"
-                                stroke="rgba(192,192,200,0.12)"
-                                strokeWidth="3"
-                              />
-                              <circle
-                                cx="24"
-                                cy="24"
-                                r={GAUGE_RADIUS}
-                                fill="none"
-                                stroke={strokeColor}
-                                strokeWidth="3"
-                                className="gauge-circle"
-                                style={{ "--dash-len": `${dashLen}` } as React.CSSProperties}
-                                strokeLinecap="round"
-                                transform="rotate(-90 24 24)"
-                              />
-                              <text
-                                ref={(el) => { scoreTextRefs.current[i] = el; }}
-                                data-target={score}
-                                x="24"
-                                y="24"
-                                textAnchor="middle"
-                                dominantBaseline="central"
-                                fill="var(--text-primary)"
-                                fontSize="14"
-                                fontWeight="700"
-                                fontFamily="var(--font-barlow-condensed), var(--font-mono), sans-serif"
-                              >
-                                {score}
-                              </text>
-                            </svg>
-                            <span className="boarding-pass-gauge-label">{label}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                  )}
+                  <LighthouseGauges scoresPromise={lighthouseScores} />
 
                   {/* QR Codes */}
                   <div className="flex gap-3">
@@ -700,11 +699,10 @@ const Hero = ({ lighthouseScores }: HeroProps) => {
               </div>
 
             </article>
-          </m.div>
+          </div>
 
           {/* Scroll indicator */}
-          <m.div
-            variants={line}
+          <div
             className="mt-16 flex items-center gap-3"
             aria-hidden="true"
           >
@@ -716,8 +714,8 @@ const Hero = ({ lighthouseScores }: HeroProps) => {
               animate={{ scaleY: [1, 0.3, 1] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             />
-          </m.div>
-        </m.div>
+          </div>
+        </div>
       </div>
     </section>
   );

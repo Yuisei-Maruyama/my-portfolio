@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Syne, Dosis, Barlow_Condensed } from "next/font/google";
+import { Syne, Dosis } from "next/font/google";
 import { Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
@@ -20,13 +20,6 @@ const dosis = Dosis({
   variable: "--font-dosis",
   subsets: ["latin"],
   weight: ["800"],
-  display: "optional",
-});
-
-const barlowCondensed = Barlow_Condensed({
-  variable: "--font-barlow-condensed",
-  subsets: ["latin"],
-  weight: ["400", "700"],
   display: "optional",
 });
 
@@ -128,7 +121,7 @@ const RootLayout = async ({
         />
       </head>
       <body
-        className={`${syne.variable} ${geistMono.variable} ${dosis.variable} ${barlowCondensed.variable} antialiased`}
+        className={`${syne.variable} ${geistMono.variable} ${dosis.variable} antialiased`}
       >
         <NextIntlClientProvider messages={messages}>
           <MotionProvider>

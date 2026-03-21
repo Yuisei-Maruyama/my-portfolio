@@ -16,19 +16,21 @@ const Home = async ({ params }: { params: Promise<{ locale: string }> }) => {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const lighthouseScores = await getLighthouseScores();
+  const lighthouseScoresPromise = getLighthouseScores();
 
   return (
     <div className="relative">
       <SkyParallaxBackground />
       <Header />
       <main className="relative z-10">
-        <Hero lighthouseScores={lighthouseScores} />
-        <About />
-        <Skills />
-        <Career />
-        <Works />
-        <Contact />
+        <Hero lighthouseScores={lighthouseScoresPromise} />
+        <div className="bg-primary/80">
+          <About />
+          <Skills />
+          <Career />
+          <Works />
+          <Contact />
+        </div>
       </main>
       <Footer />
     </div>

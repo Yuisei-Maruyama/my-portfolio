@@ -40,7 +40,7 @@
   --font-heading: var(--font-syne);
   --font-mono: var(--font-geist-mono);
   --font-body: var(--font-geist-mono);
-  --font-bp: var(--font-barlow-condensed);
+  --font-bp: var(--font-mono);
 
   /* Responsive text sizes */
   --text-detail: 14px;
@@ -53,10 +53,10 @@
 }
 
 @theme inline {
-  --color-bg-primary: var(--bg-primary);
-  --color-bg-surface: var(--bg-surface);
-  --color-bg-card: var(--bg-card);
-  --color-bg-card-hover: var(--bg-card-hover);
+  --color-primary: var(--bg-primary);
+  --color-surface: var(--bg-surface);
+  --color-card: var(--bg-card);
+  --color-card-hover: var(--bg-card-hover);
   --color-silver: var(--silver);
   --color-silver-50: var(--silver-50);
   --color-silver-100: var(--silver-100);
@@ -66,7 +66,6 @@
   --color-silver-light: var(--silver-light);
   --color-silver-bright: var(--silver-bright);
   --color-silver-dim: var(--silver-dim);
-  --color-primary: var(--text-primary);
   --color-secondary: var(--text-secondary);
   --color-muted: var(--text-muted);
   --font-display: var(--font-display);
@@ -98,6 +97,11 @@
   --tracking-display: 0.3em;
 }
 
+/* ═══ Text color overrides ═══
+   --color-primary は背景色(#09090B)に割り当てているため、
+   text-primary を明示的に上書きして明るいテキスト色を維持する */
+.text-primary { color: var(--text-primary); }
+
 /* ═══ Base ═══ */
 html {
   scroll-behavior: smooth;
@@ -110,7 +114,7 @@ body {
   background: var(--bg-primary);
   color: var(--text-primary);
   font-family: var(--font-mono), ui-monospace,
-    "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Meiryo", monospace;
+    var(--font-noto-sans-jp), "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Meiryo", monospace;
   overflow-x: hidden;
 }
 
@@ -571,7 +575,7 @@ img.boarding-pass-qr {
 }
 
 .boarding-pass-stub {
-  display: flex;
+  /* display は Tailwind の hidden lg:flex で制御 */
   align-items: center;
   justify-content: space-between;
   padding-top: var(--spacing-bp-stub-pt);
@@ -659,9 +663,7 @@ img.boarding-pass-qr {
   mask-position: center;
 }
 
-.sky-scenery-1 { background-image: url("/images/window_01.webp"); }
-.sky-scenery-2 { background-image: url("/images/window_02.webp"); }
-.sky-scenery-3 { background-image: url("/images/window_03.webp"); }
+/* window_01〜03 は JS で遅延ロード (SkyParallaxBackground.tsx) */
 
 /* Window frame overlay */
 .sky-window-frame {
