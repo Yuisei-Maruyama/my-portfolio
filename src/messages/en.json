@@ -14,8 +14,9 @@
     }
   },
   "about": {
-    "bio1": "Started career as a frontend engineer in 2019. After gaining experience with Vue.js / Nuxt.js, now focused on modern web development centered around React / Next.js.",
-    "bio2": "At CyberAgent, Inc., led the 0-to-1 headless EC development using Shopify. Handled end-to-end from requirements gathering and design to implementation, testing, and deployment, while leading a team of 4-6 engineers.",
+    "bio1": "Started career as a frontend engineer in 2020. After gaining experience with Vue.js / Nuxt.js, now focused on modern web development centered around React / Next.js.",
+    "bio4": "At Gizumo, Inc., contributed to multiple projects using Vue.js / Nuxt.js. For a government agency user and organization management system, handled both frontend and backend (Node.js), implementing API coordination across microservices and accessible UI compliant with government standards. Gained diverse experience across CMS + MA services and an education platform renewal.",
+    "bio2": "At CyberAgent, Inc., led the 0-to-1 headless EC development using Shopify. Handled end-to-end from requirements gathering and design system discussions to implementation, testing, and deployment, while leading a team of 4-6 engineers.",
     "bio3": "Leveraged Claude AI to create requirements documents and design docs, and drove development process improvements by streamlining the workflow from issue creation through code review."
   },
   "skills": {

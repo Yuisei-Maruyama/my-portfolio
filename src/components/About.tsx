@@ -29,6 +29,7 @@ const About = async () => {
           </Text>
           <div className="space-y-4 text-primary text-base leading-[1.8]">
             <p>{t("bio1")}</p>
+            <p>{t("bio4")}</p>
             <p>{t("bio2")}</p>
             <p>{t("bio3")}</p>
           </div>
