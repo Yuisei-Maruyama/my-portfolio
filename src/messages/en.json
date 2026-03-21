@@ -162,6 +162,22 @@
       }
     }
   },
+  "hobby": {
+    "items": {
+      "kakeibo": {
+        "title": "Kakeibo Bot",
+        "role": "Individual Developer",
+        "description": "A LINE Bot that automates household expense management for couples. Snap a receipt and Gemini AI logs it to Google Calendar automatically. Monthly settlement reports sent on the 15th and end of each month.",
+        "highlights": [
+          "AI-powered receipt image analysis and categorization via Gemini API",
+          "Bi-directional Google Calendar integration for unified expense & schedule management",
+          "Automated monthly settlement reports via Cloud Scheduler (15th & end of month)",
+          "20+ text commands with step-by-step conversational input flow",
+          "Serverless architecture: Cloud Functions + Firestore + Secret Manager"
+        ]
+      }
+    }
+  },
   "contact": {
     "description": "Feel free to reach out."
   },

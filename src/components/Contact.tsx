@@ -73,7 +73,7 @@ const Contact = () => {
     <section id="contact" className="content-auto py-28 px-5 sm:px-8 max-w-6xl mx-auto">
       <MotionDiv {...FADE_IN} className="flex items-center gap-4 mb-16">
         <Text variant="overline" className="border border-silver-100 px-3 py-1.5" aria-hidden="true">
-          05
+          06
         </Text>
         <div className="h-px flex-1 bg-gradient-to-r from-silver-200 to-transparent max-w-24" aria-hidden="true" />
         <h2 className="font-[family-name:var(--font-heading)] text-2xl sm:text-3xl font-bold tracking-wide">

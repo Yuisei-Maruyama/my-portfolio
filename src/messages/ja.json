@@ -157,6 +157,22 @@
       }
     }
   },
+  "hobby": {
+    "items": {
+      "kakeibo": {
+        "title": "家計ぼっと",
+        "role": "Individual Developer",
+        "description": "パートナーとの金銭管理を自動化する LINE Bot。レシートの写真を送るだけで Gemini API が自動解析し Google カレンダーに記録。毎月15日・月末に精算レポートを自動送信。",
+        "highlights": [
+          "Gemini API によるレシート画像の AI 自動解析・カテゴリ分類",
+          "Google Calendar API との双方向連携で支出・予定を一元管理",
+          "Cloud Scheduler による毎月15日・月末の自動精算レポート送信",
+          "20 以上のテキストコマンドと対話形式の入力フローを実装",
+          "Cloud Functions + Firestore + Secret Manager のサーバーレス構成"
+        ]
+      }
+    }
+  },
   "contact": {
     "description": "お気軽にご連絡ください。"
   },

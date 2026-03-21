@@ -23,11 +23,11 @@ const About = async () => {
         {...FADE_IN}
         transition={{ duration: 0.7, delay: 0.1 }}
       >
-        <div className="mirror-card rounded-sm p-6 sm:p-8 corner-frame max-w-3xl">
-          <Text variant="overline" as="p" className="tracking-label mb-6 uppercase" aria-hidden="true">
+        <div className="mirror-card rounded-sm p-6 sm:p-8 corner-frame">
+          <Text variant="overline" as="p" className="tracking-label mb-6 uppercase text-silver-bright drop-shadow-[0_0_8px_rgba(192,192,200,0.85)]" aria-hidden="true">
             &gt; cat profile.md
           </Text>
-          <div className="space-y-4 text-primary text-sm leading-[1.8]">
+          <div className="space-y-4 text-primary text-base leading-[1.8]">
             <p>{t("bio1")}</p>
             <p>{t("bio2")}</p>
             <p>{t("bio3")}</p>
