@@ -10,8 +10,8 @@ help: ## Show available commands
 install: ## Install dependencies
 	pnpm install
 
-dev: ## Start development server
-	pnpm dev
+dev: ## Start development server (clears .next cache first)
+	rm -rf .next && pnpm dev
 
 build: ## Build for production
 	pnpm build

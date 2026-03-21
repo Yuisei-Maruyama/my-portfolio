@@ -3,6 +3,5 @@
 import { m } from "framer-motion";
 import type { ComponentProps } from "react";
 
-type MotionDivProps = ComponentProps<typeof m.div>;
-
-export const MotionDiv = (props: MotionDivProps) => <m.div {...props} />;
+export const MotionDiv = (props: ComponentProps<typeof m.div>) => <m.div {...props} />;
+export const MotionA = (props: ComponentProps<typeof m.a>) => <m.a {...props} />;

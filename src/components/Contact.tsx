@@ -1,8 +1,6 @@
-"use client";
-
-import { m } from "framer-motion";
-import { FADE_IN } from "@/lib/constants";
+import { MotionDiv, MotionA } from "./Motion";
 import Text from "./Typography";
+import { FADE_IN } from "@/lib/constants";
 
 const GitHubIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
@@ -73,7 +71,7 @@ const contacts = [
 const Contact = () => {
   return (
     <section id="contact" className="content-auto py-28 px-5 sm:px-8 max-w-6xl mx-auto">
-      <m.div {...FADE_IN} className="flex items-center gap-4 mb-16">
+      <MotionDiv {...FADE_IN} className="flex items-center gap-4 mb-16">
         <Text variant="overline" className="border border-silver-100 px-3 py-1.5" aria-hidden="true">
           05
         </Text>
@@ -81,13 +79,13 @@ const Contact = () => {
         <h2 className="font-[family-name:var(--font-heading)] text-2xl sm:text-3xl font-bold tracking-wide">
           CONTACT
         </h2>
-      </m.div>
+      </MotionDiv>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {contacts.map((contact, i) => {
           const Icon = contact.icon;
           return (
-            <m.a
+            <MotionA
               key={contact.label}
               href={contact.href}
               target={contact.label !== "Email" ? "_blank" : undefined}
@@ -104,7 +102,7 @@ const Contact = () => {
                 {contact.label}
               </Text>
               <Text variant="caption" as="p">{contact.value}</Text>
-            </m.a>
+            </MotionA>
           );
         })}
       </div>

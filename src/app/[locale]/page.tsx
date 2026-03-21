@@ -37,8 +37,7 @@ const Home = async ({ params }: { params: Promise<{ locale: string }> }) => {
           <Contact />
         </div>
       </main>
-      {/* Footer: コンテンツ終端から空背景をフェードさせつつ dark で締める */}
-      <div className="bg-gradient-to-t from-primary/80 via-primary/50 to-transparent pt-20">
+      <div className="relative z-10 bg-primary/80">
         <Footer />
       </div>
     </div>
