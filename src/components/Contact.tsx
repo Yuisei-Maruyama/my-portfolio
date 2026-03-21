@@ -1,7 +1,6 @@
 "use client";
 
 import { m } from "framer-motion";
-import { useTranslations } from "next-intl";
 import { FADE_IN } from "@/lib/constants";
 import Text from "./Typography";
 
@@ -72,8 +71,6 @@ const contacts = [
 ];
 
 const Contact = () => {
-  const t = useTranslations("contact");
-
   return (
     <section id="contact" className="content-auto py-28 px-5 sm:px-8 max-w-6xl mx-auto">
       <m.div {...FADE_IN} className="flex items-center gap-4 mb-16">
@@ -85,14 +82,6 @@ const Contact = () => {
           CONTACT
         </h2>
       </m.div>
-
-      <m.p
-        {...FADE_IN}
-        transition={{ duration: 0.7, delay: 0.1 }}
-        className="text-secondary text-sm mb-12 max-w-md leading-relaxed whitespace-pre-line"
-      >
-        {t("description")}
-      </m.p>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {contacts.map((contact, i) => {

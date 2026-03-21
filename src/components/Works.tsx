@@ -1,17 +1,15 @@
-"use client";
-
-import { m } from "framer-motion";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { worksData } from "@/data/works";
 import { FADE_IN } from "@/lib/constants";
 import Text from "./Typography";
+import { MotionDiv } from "./Motion";
 
-const Works = () => {
-  const t = useTranslations("works");
+const Works = async () => {
+  const t = await getTranslations("works");
 
   return (
     <section id="works" className="content-auto py-28 px-5 sm:px-8 max-w-6xl mx-auto">
-      <m.div {...FADE_IN} className="flex items-center gap-4 mb-16">
+      <MotionDiv {...FADE_IN} className="flex items-center gap-4 mb-16">
         <Text variant="overline" className="border border-silver-100 px-3 py-1.5" aria-hidden="true">
           04
         </Text>
@@ -19,13 +17,13 @@ const Works = () => {
         <h2 className="font-[family-name:var(--font-heading)] text-2xl sm:text-3xl font-bold tracking-wide">
           WORKS
         </h2>
-      </m.div>
+      </MotionDiv>
 
       <div className="grid md:grid-cols-2 gap-5">
         {worksData.map((work, i) => {
           const highlights = t.raw(`items.${work.id}.highlights`) as string[];
           return (
-            <m.div
+            <MotionDiv
               key={work.id}
               initial={{ opacity: 0, y: 25 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -90,7 +88,7 @@ const Works = () => {
                   </div>
                 </div>
               </div>
-            </m.div>
+            </MotionDiv>
           );
         })}
       </div>

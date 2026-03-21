@@ -26,6 +26,7 @@ const dosis = Dosis({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  weight: ["400", "700"],
   display: "optional",
 });
 

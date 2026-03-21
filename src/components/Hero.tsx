@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useEffect, use, Suspense } from "react";
-import { m } from "framer-motion";
 import Image from "next/image";
 import Text from "./Typography";
 import type { LighthouseScores } from "@/lib/lighthouse";
@@ -709,11 +708,7 @@ const Hero = ({ lighthouseScores }: HeroProps) => {
             <Text variant="overline" className="uppercase">
               scroll
             </Text>
-            <m.span
-              className="block w-px h-6 bg-silver/40 origin-top"
-              animate={{ scaleY: [1, 0.3, 1] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            />
+            <span className="block w-px h-6 bg-silver/40 origin-top scroll-indicator-line" />
           </div>
         </div>
       </div>

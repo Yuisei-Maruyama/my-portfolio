@@ -1,19 +1,17 @@
-"use client";
-
-import { m } from "framer-motion";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { skillsData } from "@/data/skills";
 import { FADE_IN } from "@/lib/constants";
 import Text from "./Typography";
+import { MotionDiv } from "./Motion";
 
 const categoryKeys = ["frontend", "backend", "tools", "infra"] as const;
 
-const Skills = () => {
-  const t = useTranslations("skills");
+const Skills = async () => {
+  const t = await getTranslations("skills");
 
   return (
     <section id="skills" className="content-auto py-28 px-5 sm:px-8 max-w-6xl mx-auto">
-      <m.div {...FADE_IN} className="flex items-center gap-4 mb-16">
+      <MotionDiv {...FADE_IN} className="flex items-center gap-4 mb-16">
         <Text variant="overline" className="border border-silver-100 px-3 py-1.5" aria-hidden="true">
           02
         </Text>
@@ -21,13 +19,13 @@ const Skills = () => {
         <h2 className="font-[family-name:var(--font-heading)] text-2xl sm:text-3xl font-bold tracking-wide">
           SKILLS
         </h2>
-      </m.div>
+      </MotionDiv>
 
       <div className="space-y-14">
         {categoryKeys.map((key) => {
           const skills = skillsData.filter((s) => s.category === key);
           return (
-            <m.div key={key} {...FADE_IN}>
+            <MotionDiv key={key} {...FADE_IN}>
               <div className="flex items-center gap-3 mb-6">
                 <Text variant="label">
                   {t(`${key}.label`)}
@@ -39,7 +37,7 @@ const Skills = () => {
                 {skills.map((skill, i) => {
                   const Icon = skill.icon;
                   return (
-                    <m.div
+                    <MotionDiv
                       key={skill.name}
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
@@ -51,11 +49,11 @@ const Skills = () => {
                       <span className="text-xs text-primary">
                         {skill.name}
                       </span>
-                    </m.div>
+                    </MotionDiv>
                   );
                 })}
               </div>
-            </m.div>
+            </MotionDiv>
           );
         })}
       </div>
