@@ -26,6 +26,11 @@ const CATEGORY_MAP: Record<CategoryKey, keyof LighthouseScores> = {
 };
 
 async function fetchScores(): Promise<LighthouseScores | null> {
+  // ビルド時（SSG）はスキップ — タイムアウトによるビルド遅延を防ぐ
+  if (process.env.NEXT_PHASE === "phase-production-build") {
+    return null;
+  }
+
   const apiKey = process.env.PAGESPEED_API_KEY;
 
   const params = new URLSearchParams({
@@ -43,7 +48,7 @@ async function fetchScores(): Promise<LighthouseScores | null> {
 
   try {
     const res = await fetch(endpoint, {
-      signal: AbortSignal.timeout(25_000),
+      signal: AbortSignal.timeout(8_000),
     });
 
     if (!res.ok) {
