@@ -530,6 +530,7 @@ const Hero = ({ lighthouseScores }: HeroProps) => {
                           className="object-cover"
                           sizes="100px"
                           priority
+                          fetchPriority="high"
                         />
                       </div>
                     </div>
@@ -659,6 +660,7 @@ const Hero = ({ lighthouseScores }: HeroProps) => {
                       className="object-cover"
                       sizes="180px"
                       priority
+                      fetchPriority="high"
                     />
                   </div>
                 </div>
