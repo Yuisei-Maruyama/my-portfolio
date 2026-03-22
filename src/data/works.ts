@@ -29,6 +29,6 @@ export const worksData: Work[] = [
   {
     id: "portfolio",
     technologies: ["Next.js", "TypeScript", "TailwindCSS", "Framer Motion"],
-    link: "https://github.com/y-metro",
+    link: "https://github.com/Yuisei-Maruyama/my-portfolio",
   },
 ];
