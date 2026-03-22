@@ -131,6 +131,11 @@ const RootLayout = async ({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        {/* スカイパララックス背景画像をブラウザアイドル時に先取りキャッシュ。
+            requestIdleCallback より早く開始されるため、スクロール到達時に即表示 */}
+        <link rel="prefetch" href="/images/window_01.webp" as="image" type="image/webp" />
+        <link rel="prefetch" href="/images/window_02.webp" as="image" type="image/webp" />
+        <link rel="prefetch" href="/images/window_03.webp" as="image" type="image/webp" />
       </head>
       <body
         className={`${syne.variable} ${geistMono.variable} ${dosis.variable} antialiased`}
