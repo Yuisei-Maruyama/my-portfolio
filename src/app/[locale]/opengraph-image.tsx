@@ -6,27 +6,36 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 const FLIGHT_LOG = [
-  { flag: "🇺🇸", codes: "IAD · BWI" },
-  { flag: "🇫🇷", codes: "CDG" },
-  { flag: "🇩🇪", codes: "MUC · BER" },
-  { flag: "🇪🇸", codes: "BCN" },
-  { flag: "🇮🇹", codes: "VCE · FCO · MXP" },
-  { flag: "🇳🇱", codes: "AMS" },
-  { flag: "🇬🇧", codes: "LHR · BRS" },
-  { flag: "🇧🇪", codes: "BRU" },
-  { flag: "🇰🇷", codes: "ICN" },
-  { flag: "🇭🇰", codes: "HKG" },
-  { flag: "🇲🇾", codes: "KUL" },
+  { codes: "IAD · BWI" },
+  { codes: "CDG" },
+  { codes: "MUC · BER" },
+  { codes: "BCN" },
+  { codes: "VCE · FCO · MXP" },
+  { codes: "AMS" },
+  { codes: "LHR · BRS" },
+  { codes: "BRU" },
+  { codes: "ICN" },
+  { codes: "HKG" },
+  { codes: "KUL" },
 ];
 
-const OGImage = async () => {
-  const interBold = await fetch(
-    "https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuFuYMZhrib2Bg-4.ttf",
-  ).then((res) => res.arrayBuffer());
+const loadFont = async (url: string): Promise<ArrayBuffer | null> => {
+  try {
+    return await fetch(url).then((r) => r.arrayBuffer());
+  } catch {
+    return null;
+  }
+};
 
-  const interRegular = await fetch(
-    "https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZhrib2Bg-4.ttf",
-  ).then((res) => res.arrayBuffer());
+const OGImage = async () => {
+  const [interBold, interRegular] = await Promise.all([
+    loadFont(
+      "https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuFuYMZhrib2Bg-4.ttf",
+    ),
+    loadFont(
+      "https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfMZhrib2Bg-4.ttf",
+    ),
+  ]);
 
   return new ImageResponse(
     (
@@ -121,7 +130,7 @@ const OGImage = async () => {
                   style={{
                     fontFamily: "Inter",
                     fontSize: "64px",
-                    fontWeight: 800,
+                    fontWeight: 700,
                     lineHeight: 0.9,
                     background: "linear-gradient(170deg, #C0C0C8 0%, #F5F5F7 30%, #0a0a14 48%, #ffffff 52%, #0a0a14 56%, #F5F5F7 70%, #C0C0C8 100%)",
                     backgroundClip: "text",
@@ -134,7 +143,7 @@ const OGImage = async () => {
                   style={{
                     fontFamily: "Inter",
                     fontSize: "64px",
-                    fontWeight: 800,
+                    fontWeight: 700,
                     lineHeight: 0.9,
                     background: "linear-gradient(170deg, #C0C0C8 0%, #F5F5F7 30%, #0a0a14 48%, #ffffff 52%, #0a0a14 56%, #F5F5F7 70%, #C0C0C8 100%)",
                     backgroundClip: "text",
@@ -183,7 +192,7 @@ const OGImage = async () => {
                   FLIGHT LOG · 11 Countries
                 </span>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
-                  {FLIGHT_LOG.map(({ flag, codes }) => (
+                  {FLIGHT_LOG.map(({ codes }) => (
                     <span
                       key={codes}
                       style={{
@@ -196,7 +205,7 @@ const OGImage = async () => {
                         padding: "2px 8px",
                       }}
                     >
-                      {flag} {codes}
+                      {codes}
                     </span>
                   ))}
                 </div>
@@ -247,19 +256,9 @@ const OGImage = async () => {
     {
       ...size,
       fonts: [
-        {
-          name: "Inter",
-          data: interBold,
-          weight: 700,
-          style: "normal",
-        },
-        {
-          name: "Inter",
-          data: interRegular,
-          weight: 400,
-          style: "normal",
-        },
-      ],
+        interBold && { name: "Inter", data: interBold, weight: 700 as const, style: "normal" as const },
+        interRegular && { name: "Inter", data: interRegular, weight: 400 as const, style: "normal" as const },
+      ].filter((f): f is { name: string; data: ArrayBuffer; weight: 700 | 400; style: "normal" } => Boolean(f)),
     },
   );
 };
