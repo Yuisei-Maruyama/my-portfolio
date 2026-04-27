@@ -6,12 +6,13 @@ import Footer from "@/components/Footer";
 import SkyParallaxBackground from "@/components/SkyParallaxBackground";
 import { getLighthouseScores } from "@/lib/lighthouse";
 
-const About   = dynamic(() => import("@/components/About"),   { loading: () => <div style={{ minHeight: "32rem" }} /> });
-const Skills  = dynamic(() => import("@/components/Skills"),  { loading: () => <div style={{ minHeight: "24rem" }} /> });
-const Career  = dynamic(() => import("@/components/Career"),  { loading: () => <div style={{ minHeight: "48rem" }} /> });
-const Works   = dynamic(() => import("@/components/Works"),   { loading: () => <div style={{ minHeight: "48rem" }} /> });
-const Hobby   = dynamic(() => import("@/components/Hobby"),   { loading: () => <div style={{ minHeight: "24rem" }} /> });
-const Contact = dynamic(() => import("@/components/Contact"), { loading: () => <div style={{ minHeight: "16rem" }} /> });
+const About    = dynamic(() => import("@/components/About"),    { loading: () => <div style={{ minHeight: "32rem" }} /> });
+const Skills   = dynamic(() => import("@/components/Skills"),   { loading: () => <div style={{ minHeight: "24rem" }} /> });
+const Career   = dynamic(() => import("@/components/Career"),   { loading: () => <div style={{ minHeight: "48rem" }} /> });
+const Works    = dynamic(() => import("@/components/Works"),    { loading: () => <div style={{ minHeight: "48rem" }} /> });
+const Hobby    = dynamic(() => import("@/components/Hobby"),    { loading: () => <div style={{ minHeight: "24rem" }} /> });
+const Business = dynamic(() => import("@/components/Business"), { loading: () => <div style={{ minHeight: "32rem" }} /> });
+const Contact  = dynamic(() => import("@/components/Contact"),  { loading: () => <div style={{ minHeight: "16rem" }} /> });
 
 const Home = async ({ params }: { params: Promise<{ locale: string }> }) => {
   const { locale } = await params;
@@ -36,6 +37,7 @@ const Home = async ({ params }: { params: Promise<{ locale: string }> }) => {
           <Career />
           <Works />
           <Hobby />
+          <Business />
           <Contact />
         </div>
       </main>

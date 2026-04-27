@@ -174,6 +174,48 @@
       }
     }
   },
+  "business": {
+    "heading": "BUSINESS",
+    "lead": "屋号 METRO として、情報通信業（Web 開発業務）の個人事業を営んでいます。業務委託・請負契約により、Web アプリケーション開発・技術コンサルティングを継続的に提供しています。",
+    "info": {
+      "tradeName": { "label": "屋号", "value": "METRO" },
+      "representative": { "label": "代表者", "value": "丸山 唯成（Yuisei Maruyama）" },
+      "industry": { "label": "業種", "value": "情報通信業 ／ Web 開発業務" },
+      "businessForm": { "label": "事業形態", "value": "個人事業主（業務委託・請負契約により受託）" },
+      "established": { "label": "開業日", "value": "2026年4月20日" },
+      "location": { "label": "所在地", "value": "東京都江東区" },
+      "contact": { "label": "連絡先", "value": "yuisei.work@gmail.com" }
+    },
+    "services": {
+      "heading": "取扱サービス",
+      "items": {
+        "web-dev": {
+          "title": "Web アプリケーション受託開発",
+          "description": "React / Next.js / TypeScript を中心に、Web アプリケーション・サイトの設計から実装まで一気通貫で受託。Shopify ヘッドレス EC、行政システム、CMS、教育プラットフォームなどの開発実績があります。"
+        },
+        "consulting": {
+          "title": "フロントエンド技術コンサルティング",
+          "description": "アーキテクチャ設計レビュー、パフォーマンス改善、技術選定、コードレビュー、Claude AI を活用した開発プロセス効率化など、フロントエンド領域の技術支援を提供します。"
+        },
+        "contract": {
+          "title": "チーム参画／業務委託・スポット",
+          "description": "プロダクトチームへの業務委託参画（リード経験あり）、技術顧問契約、スポットでのコードレビュー・要件定義支援に対応します。"
+        }
+      }
+    },
+    "scope": {
+      "heading": "提供業務スコープ",
+      "steps": ["要件定義", "設計", "実装", "テスト", "デプロイ・運用支援"]
+    },
+    "clients": {
+      "heading": "取引可能な企業規模・業種",
+      "items": [
+        "スタートアップから大手エンタープライズまで対応可能",
+        "EC・コーポレート・行政・CMS・教育サービス等の実績",
+        "B2B ／ B2C いずれの領域も対応可能"
+      ]
+    }
+  },
   "contact": {
     "description": "お気軽にご連絡ください。"
   },

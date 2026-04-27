@@ -179,6 +179,48 @@
       }
     }
   },
+  "business": {
+    "heading": "BUSINESS",
+    "lead": "Operating as a sole proprietor under the trade name METRO, providing web development services in the information & communications industry. I continuously provide web application development and technical consulting through service contracts.",
+    "info": {
+      "tradeName": { "label": "Trade Name", "value": "METRO" },
+      "representative": { "label": "Representative", "value": "Yuisei Maruyama (丸山 唯成)" },
+      "industry": { "label": "Industry", "value": "Information & Communications / Web Development" },
+      "businessForm": { "label": "Business Form", "value": "Sole proprietor (service / contract basis)" },
+      "established": { "label": "Established", "value": "April 20, 2026" },
+      "location": { "label": "Location", "value": "Koto-ku, Tokyo, Japan" },
+      "contact": { "label": "Contact", "value": "yuisei.work@gmail.com" }
+    },
+    "services": {
+      "heading": "Services Offered",
+      "items": {
+        "web-dev": {
+          "title": "Web Application Development",
+          "description": "End-to-end web application and site development centered on React / Next.js / TypeScript. Track record includes Shopify headless EC, government systems, CMS platforms, and educational services."
+        },
+        "consulting": {
+          "title": "Frontend Technical Consulting",
+          "description": "Architecture design review, performance optimization, technology selection, code review, and Claude AI-driven development workflow improvement."
+        },
+        "contract": {
+          "title": "Team Engagement / Spot Contracts",
+          "description": "Contract engagement on product teams (with team-lead experience), technical advisory, and spot consulting for code review and requirements definition."
+        }
+      }
+    },
+    "scope": {
+      "heading": "Service Scope",
+      "steps": ["Requirements", "Design", "Implementation", "Testing", "Deploy & Support"]
+    },
+    "clients": {
+      "heading": "Target Clients",
+      "items": [
+        "From startups to large enterprises",
+        "Track record across EC, corporate, government, CMS, and education domains",
+        "Both B2B and B2C engagements"
+      ]
+    }
+  },
   "contact": {
     "description": "Feel free to reach out."
   },

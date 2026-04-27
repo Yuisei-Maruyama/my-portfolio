@@ -102,6 +102,7 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "Yuisei Maruyama",
+  alternateName: "丸山 唯成",
   jobTitle: "Frontend Engineer",
   description: "React, Next.js, TypeScriptを中心としたフロントエンド開発を行うエンジニア",
   url: "https://yuisei-maruyama.vercel.app",
@@ -110,6 +111,35 @@ const jsonLd = {
   worksFor: {
     "@type": "Organization",
     name: "CyberAgent, Inc.",
+  },
+  hasOccupation: {
+    "@type": "Occupation",
+    name: "Web Developer / Frontend Engineer",
+    occupationLocation: {
+      "@type": "City",
+      name: "Koto-ku, Tokyo, JP",
+    },
+  },
+  owns: {
+    "@type": "ProfessionalService",
+    name: "METRO",
+    legalName: "METRO",
+    founder: "Yuisei Maruyama",
+    foundingDate: "2026-04-20",
+    areaServed: "JP",
+    serviceType: [
+      "Web Application Development",
+      "Frontend Technical Consulting",
+      "Contract Engineering",
+    ],
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Koto-ku",
+      addressRegion: "Tokyo",
+      addressCountry: "JP",
+    },
+    email: "yuisei.work@gmail.com",
+    url: "https://yuisei-maruyama.vercel.app/#business",
   },
 };
 

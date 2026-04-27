@@ -31,6 +31,11 @@ async function fetchScores(): Promise<LighthouseScores | null> {
     return null;
   }
 
+  // 開発モードでは PageSpeed API のレート制限（429）回避のためスキップ
+  if (process.env.NODE_ENV !== "production") {
+    return null;
+  }
+
   const apiKey = process.env.PAGESPEED_API_KEY;
 
   const params = new URLSearchParams({
